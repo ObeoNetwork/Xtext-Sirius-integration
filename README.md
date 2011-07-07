@@ -5,6 +5,8 @@ Xtext Viewpoint integration plug-in
 
 This plug-in provides support to integrate an Xtext editor inside a diagram representation created with Viewpoint.  
 
+![Screenshot of diagram with embedded text editor](http://github.com/ObeoNetwork/Xtext-viewpoint-integration/raw/master/screenshot-diagram+text.png "Screenshot")
+
 
 ### Requires
 
