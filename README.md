@@ -7,7 +7,7 @@ This plug-in provides support to integrate an Xtext editor inside a diagram repr
 
 ![Screenshot of diagram without embedded text editor](http://github.com/ObeoNetwork/Xtext-viewpoint-integration/raw/master/screenshot-diagram+text.png "Screenshot without the text editor")
 
-![Screenshot of diagram with embedded text editor](https://github.com/ObeoNetwork/Xtext-viewpoint-integration/blob/master/screenshot-diagram.png "Screenshot with the text editor")
+![Screenshot of diagram with embedded text editor](http://github.com/ObeoNetwork/Xtext-viewpoint-integration/blob/master/screenshot-diagram.png "Screenshot with the text editor")
 
 
 
