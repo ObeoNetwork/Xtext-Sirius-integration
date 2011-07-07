@@ -14,7 +14,8 @@ This plug-in provides support to integrate an Xtext editor inside a diagram repr
 ### How to 
 
 - Create a tool in your modeler, and in the model operation, add a Java Launch operation and set OpenEmbeddedEditor as id.
-- Extends OpenXtextEmbeddedEditor to bind your Xtext model. 
+- Extends OpenXtextEmbeddedEditor to bind your Xtext model.
+
 ```java
 import org.eclipse.xtext.example.domainmodel.ui.internal.DomainmodelActivator;
 import com.google.inject.Injector;
@@ -27,7 +28,9 @@ public class OpenEmbeddedEditor extends OpenXtextEmbeddedEditor {
 	}
 }
 ```
+
 - register your java action
+
 ```xml
    <extension point="fr.obeo.dsl.viewpoint.externalJavaAction">
       <javaActions
