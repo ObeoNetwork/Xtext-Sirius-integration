@@ -14,7 +14,7 @@ This plug-in provides support to integrate an Xtext editor inside a diagram repr
 
 ### Requires
 
-- OD 5.0.4
+- Obeo Designer 5.0.4
 - Xtext 2.0
 
 ### How to 
