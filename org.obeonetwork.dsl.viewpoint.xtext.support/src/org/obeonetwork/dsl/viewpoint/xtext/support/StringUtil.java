@@ -5,7 +5,7 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
-package fr.obeo.dsl.viewpoint.xtext.support;
+package org.obeonetwork.dsl.viewpoint.xtext.support;
 
 /**
  * @author koehnlein

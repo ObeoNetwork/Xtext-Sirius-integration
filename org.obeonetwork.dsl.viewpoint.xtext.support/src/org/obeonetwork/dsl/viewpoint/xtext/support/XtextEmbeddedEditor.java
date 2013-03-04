@@ -9,7 +9,7 @@
  *    Obeo  - initial API and implementation
  ****************************************************************************/
 
-package fr.obeo.dsl.viewpoint.xtext.support;
+package org.obeonetwork.dsl.viewpoint.xtext.support;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

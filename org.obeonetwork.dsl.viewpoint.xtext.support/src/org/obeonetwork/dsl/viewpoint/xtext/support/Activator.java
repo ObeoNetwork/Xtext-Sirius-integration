@@ -9,7 +9,7 @@
  *    Obeo  - initial API and implementation
  ****************************************************************************/
 
-package fr.obeo.dsl.viewpoint.xtext.support;
+package org.obeonetwork.dsl.viewpoint.xtext.support;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -22,7 +22,7 @@ import org.osgi.framework.BundleContext;
 public class Activator extends AbstractUIPlugin {
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "fr.obeo.dsl.viewpoint.xtext.support";
+	public static final String PLUGIN_ID = "org.obeonetwork.dsl.viewpoint.xtext.support";
 
 	// The shared instance
 	private static Activator plugin;

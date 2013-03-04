@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>fr.obeo.dsl.viewpoint.xtext.support</name>
+	<name>org.obeonetwork.dsl.viewpoint.xtext.support</name>
 	<comment></comment>
 	<projects>
 	</projects>

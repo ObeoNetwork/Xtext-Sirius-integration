@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: fr.obeo.dsl.viewpoint.xtext.support
-Bundle-SymbolicName: fr.obeo.dsl.viewpoint.xtext.support
+Bundle-SymbolicName: org.obeonetwork.dsl.viewpoint.xtext.support
 Bundle-Version: 1.0.0.qualifier
-Bundle-Activator: fr.obeo.dsl.viewpoint.xtext.support.Activator
+Bundle-Activator: org.obeonetwork.dsl.viewpoint.xtext.support.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.emf.common;bundle-version="2.5.0",
@@ -19,5 +19,5 @@ Require-Bundle: org.eclipse.ui,
  fr.obeo.dsl.viewpoint;bundle-version="2.6.0"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Export-Package: fr.obeo.dsl.viewpoint.xtext.support,
- fr.obeo.dsl.viewpoint.xtext.support.action
+Export-Package: org.obeonetwork.dsl.viewpoint.xtext.support,
+ org.obeonetwork.dsl.viewpoint.xtext.support.action

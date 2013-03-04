@@ -9,7 +9,7 @@
  *    Obeo  - initial API and implementation
  ****************************************************************************/
 
-package fr.obeo.dsl.viewpoint.xtext.support.action;
+package org.obeonetwork.dsl.viewpoint.xtext.support.action;
 
 import java.util.Collection;
 import java.util.Map;
@@ -24,11 +24,11 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
+import org.obeonetwork.dsl.viewpoint.xtext.support.XtextEmbeddedEditor;
 
 import com.google.inject.Injector;
 
 import fr.obeo.dsl.viewpoint.tools.api.ui.IExternalJavaAction;
-import fr.obeo.dsl.viewpoint.xtext.support.XtextEmbeddedEditor;
 
 public abstract class OpenXtextEmbeddedEditor implements IExternalJavaAction {
 
