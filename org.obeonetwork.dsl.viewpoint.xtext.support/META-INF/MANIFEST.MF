@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: fr.obeo.dsl.viewpoint.xtext.support
+Bundle-Name: org.obeonetwork.dsl.viewpoint.xtext.support
 Bundle-SymbolicName: org.obeonetwork.dsl.viewpoint.xtext.support
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: org.obeonetwork.dsl.viewpoint.xtext.support.Activator
