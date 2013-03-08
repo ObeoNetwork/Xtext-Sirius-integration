@@ -10,6 +10,7 @@
 	<modules>
 		<module>plugins/org.obeonetwork.dsl.viewpoint.xtext.support</module>
 		<module>features/org.obeonetwork.dsl.viewpoint.feature.xtext.support</module>
+		<module>features/org.obeonetwork.dsl.viewpoint.xtext.support.update</module>
 	</modules>
 	
 	<properties>
