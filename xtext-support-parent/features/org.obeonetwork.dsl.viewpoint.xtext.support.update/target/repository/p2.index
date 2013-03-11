@@ -1,3 +1,0 @@
- version = 1
- metadata.repository.factory.order = content.jar,\!
- artifact.repository.factory.order = artifacts.jar,\!
