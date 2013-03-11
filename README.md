@@ -25,7 +25,7 @@ This plug-in provides support to integrate an Xtext editor inside a diagram repr
 ```java
 import org.eclipse.xtext.example.domainmodel.ui.internal.DomainmodelActivator;
 import com.google.inject.Injector;
-import fr.obeo.dsl.viewpoint.xtext.support.action.OpenXtextEmbeddedEditor;
+import org.obeonetwork.dsl.viewpoint.xtext.support.action.OpenXtextEmbeddedEditor;
 
 public class OpenEmbeddedEditor extends OpenXtextEmbeddedEditor {
 	@Override
