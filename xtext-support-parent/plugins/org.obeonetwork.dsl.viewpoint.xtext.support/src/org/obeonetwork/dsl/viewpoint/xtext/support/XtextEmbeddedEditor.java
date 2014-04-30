@@ -13,43 +13,35 @@ package org.obeonetwork.dsl.viewpoint.xtext.support;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
-import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.IProjectDescription;
-import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IAdaptable;
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.geometry.Rectangle;
+import org.eclipse.emf.common.util.BasicMonitor;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.compare.diff.merge.service.MergeService;
-import org.eclipse.emf.compare.diff.metamodel.DiffElement;
-import org.eclipse.emf.compare.diff.metamodel.DiffGroup;
-import org.eclipse.emf.compare.diff.metamodel.DiffModel;
-import org.eclipse.emf.compare.diff.service.DiffService;
-import org.eclipse.emf.compare.match.metamodel.MatchModel;
-import org.eclipse.emf.compare.match.service.MatchService;
+import org.eclipse.emf.compare.Comparison;
+import org.eclipse.emf.compare.EMFCompare;
+import org.eclipse.emf.compare.merge.BatchMerger;
+import org.eclipse.emf.compare.merge.IBatchMerger;
+import org.eclipse.emf.compare.merge.IMerger;
+import org.eclipse.emf.compare.rcp.EMFCompareRCPPlugin;
+import org.eclipse.emf.compare.scope.DefaultComparisonScope;
+import org.eclipse.emf.compare.scope.IComparisonScope;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.emf.transaction.util.TransactionUtil;
 import org.eclipse.gef.EditPartViewer;
-import org.eclipse.gmf.runtime.common.core.command.CommandResult;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.DiagramRootEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.IGraphicalEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditDomain;
 import org.eclipse.gmf.runtime.diagram.ui.parts.IDiagramEditDomain;
-import org.eclipse.gmf.runtime.emf.commands.core.command.AbstractTransactionalCommand;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.source.ISourceViewer;
+import org.eclipse.sirius.viewpoint.DSemanticDecorator;
+import org.eclipse.sirius.viewpoint.ViewpointPackage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.custom.VerifyKeyListener;
@@ -84,9 +76,6 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Module;
 
-import fr.obeo.dsl.viewpoint.DSemanticDecorator;
-import fr.obeo.dsl.viewpoint.ViewpointPackage;
-
 /* largely inspired by "org.eclipse.xtext.gmf.glue" from XText examples */
 public class XtextEmbeddedEditor {
 
@@ -116,7 +105,8 @@ public class XtextEmbeddedEditor {
 
 	private String semanticElementFragment;
 
-	public XtextEmbeddedEditor(IGraphicalEditPart editPart, Injector xtextInjector) {
+	public XtextEmbeddedEditor(IGraphicalEditPart editPart,
+			Injector xtextInjector) {
 		this.hostEditPart = editPart;
 		this.xtextInjector = xtextInjector;
 	}
@@ -131,7 +121,8 @@ public class XtextEmbeddedEditor {
 	}
 
 	private boolean isDSemanticDecorator(EObject eObject) {
-		return ViewpointPackage.eINSTANCE.getDSemanticDecorator().isInstance(eObject);
+		return ViewpointPackage.eINSTANCE.getDSemanticDecorator().isInstance(
+				eObject);
 	}
 
 	public void showEditor() {
@@ -142,17 +133,24 @@ public class XtextEmbeddedEditor {
 			}
 			this.originalResource = originalSemanticElement.eResource();
 			// Clone root EObject
-			EObject semanticElement = EcoreUtil2.clone(originalResource.getContents().get(0));
-			this.xtextResource = createVirtualXtextResource(semanticElement);
+			EObject semanticElement = EcoreUtil.copy(originalResource
+					.getContents().get(0));
+			this.xtextResource = createVirtualXtextResource(
+					originalResource.getURI(), semanticElement);
 
 			// TODO manage multi resource with Xtext Linking or Scoping service
-			semanticElementFragment = originalResource.getURIFragment(originalSemanticElement);
-			if (semanticElementFragment == null || "".equals(semanticElementFragment)) {
+			semanticElementFragment = originalResource
+					.getURIFragment(originalSemanticElement);
+			if (semanticElementFragment == null
+					|| "".equals(semanticElementFragment)) {
 				return;
 			}
-			IDiagramEditDomain diagramEditDomain = hostEditPart.getDiagramEditDomain();
-			diagramEditor = ((DiagramEditDomain) diagramEditDomain).getEditorPart();
-			createXtextEditor(new ResourceWorkingCopyFileEditorInput(xtextResource));
+			IDiagramEditDomain diagramEditDomain = hostEditPart
+					.getDiagramEditDomain();
+			diagramEditor = ((DiagramEditDomain) diagramEditDomain)
+					.getEditorPart();
+			createXtextEditor(new ResourceWorkingCopyFileEditorInput(
+					xtextResource));
 		} catch (Exception e) {
 			Activator.logError(e);
 		} finally {
@@ -164,18 +162,23 @@ public class XtextEmbeddedEditor {
 
 	/**
 	 * Close this editor.
+	 * 
 	 * @param isReconcile
 	 */
 	public void closeEditor(boolean isReconcile) {
 		if (xtextEditor != null) {
 			if (isReconcile) {
 				try {
-					final IXtextDocument xtextDocument = xtextEditor.getDocument();
+					final IXtextDocument xtextDocument = xtextEditor
+							.getDocument();
 					if (!isDocumentHasErrors(xtextDocument)) {
 						// subtract 2 for the artificial newlines
-						int documentGrowth = xtextDocument.getLength() - initialDocumentSize - 2;
-						String newText = xtextDocument.get(editorOffset + 1, initialEditorSize + documentGrowth);
-						updateXtextResource(editorOffset, initialEditorSize, newText);
+						int documentGrowth = xtextDocument.getLength()
+								- initialDocumentSize - 2;
+						String newText = xtextDocument.get(editorOffset + 1,
+								initialEditorSize + documentGrowth);
+						updateXtextResource(editorOffset, initialEditorSize,
+								newText);
 					}
 				} catch (Exception exc) {
 					Activator.logError(exc);
@@ -188,50 +191,34 @@ public class XtextEmbeddedEditor {
 		}
 	}
 
-	private XtextResource createVirtualXtextResource(EObject semanticElement) throws IOException {
-		IResourceFactory resourceFactory = xtextInjector.getInstance(IResourceFactory.class);
+	private XtextResource createVirtualXtextResource(URI uri,
+			EObject semanticElement) throws IOException {
+		IResourceFactory resourceFactory = xtextInjector
+				.getInstance(IResourceFactory.class);
 		XtextResourceSet rs = xtextInjector.getInstance(XtextResourceSet.class);
 		rs.setClasspathURIContext(getClass());
-		URI uri = createURI();
 		// Create virtual resource
-		XtextResource xtextVirtualResource = (XtextResource) resourceFactory.createResource(uri);
+		XtextResource xtextVirtualResource = (XtextResource) resourceFactory
+				.createResource(URI.createURI(uri.toString()));
 		rs.getResources().add(xtextVirtualResource);
 
 		// Populate virtual resource with the given semantic element to edit
 		xtextVirtualResource.getContents().add(semanticElement);
-		//save to create file
-		//TODO remove crappy hack
-		xtextVirtualResource.save(Collections.emptyMap());
-		
+
 		// Save and reparse in order to initialize virtual Xtext resource
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		xtextVirtualResource.save(out, Collections.emptyMap());
-		xtextVirtualResource.reparse(new String(out.toByteArray()));				
-		
+		xtextVirtualResource.reparse(new String(out.toByteArray()));
+
 		return xtextVirtualResource;
 	}
 
-	private URI createURI() {
-		// FIXME remove crappy code and use in memory resource
-		// URI uri = URI.createURI("XtextResource.ram");
-		final String TEMPORARY_PROJECT_NAME = "tempProject";
-		final IProjectDescription projectDescription = ResourcesPlugin.getWorkspace().newProjectDescription(TEMPORARY_PROJECT_NAME);
-		final IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(TEMPORARY_PROJECT_NAME);
-		try {
-			if (!project.exists()){
-				project.create(projectDescription, new NullProgressMonitor());
-				project.open(new NullProgressMonitor());
-			}
-		} catch (final CoreException e) {
-			// Propagate as runtime exception
-			throw new RuntimeException(e);
-		}
-		URI uri = URI.createPlatformResourceURI("/" + TEMPORARY_PROJECT_NAME + "/temp.dmodel", false);
-		return uri;
-	}
 
-	protected void updateXtextResource(final int offset, final int replacedTextLength, final String newText) throws IOException, BadLocationException {
-		ICompositeNode oldRootNode = xtextResource.getParseResult().getRootNode();
+	protected void updateXtextResource(final int offset,
+			final int replacedTextLength, final String newText)
+			throws IOException, BadLocationException {
+		ICompositeNode oldRootNode = xtextResource.getParseResult()
+				.getRootNode();
 		// final IParseResult parseResult =
 		// xtextResource.getParser().reparse(oldRootNode, offset,
 		// Reparse the entire document
@@ -241,87 +228,73 @@ public class XtextEmbeddedEditor {
 		reparseRegion.append(originalRegion.substring(0, changeOffset));
 		reparseRegion.append(newText);
 		if (changeOffset + replacedTextLength < originalRegion.length())
-			reparseRegion.append(originalRegion.substring(changeOffset + replacedTextLength));
+			reparseRegion.append(originalRegion.substring(changeOffset
+					+ replacedTextLength));
 		String allText = reparseRegion.toString();
 		xtextResource.reparse(allText);
+		EcoreUtil.resolveAll(xtextResource);
 		final IParseResult parseResult = xtextResource.getParseResult();
 		if (!parseResult.hasSyntaxErrors()) {
-			applyChanges(originalResource.getContents().get(0), parseResult.getRootASTElement());
+			reconcile(originalResource, xtextResource);
 		}
 	}
 
-	private List<DiffElement> getChanges(EObject oldRootObject, EObject newRootObject) throws InterruptedException {
-		// use EMF compare in order to find changes
-		// between oldRootObject tree and newRootObject tree
-		Map<String, Object> options = new HashMap<String, Object>();
-		MatchModel matchModel = MatchService.doMatch(newRootObject, oldRootObject, options);
-		DiffModel diffModel = DiffService.doDiff(matchModel);
-		List<DiffElement> changes = collectChanges(diffModel);
-		return changes;
-	}
-
-	private List<DiffElement> collectChanges(DiffModel diffModel) {
-		ArrayList<DiffElement> changes = new ArrayList<DiffElement>();
-		for (DiffElement diffElement : diffModel.getOwnedElements()) {
-			collectChanges(changes, diffElement);
-		}
-		return changes;
-	}
-
-	private void collectChanges(List<DiffElement> changes, DiffElement diffElement) {
-		if (diffElement.getSubDiffElements().size() == 0 && !(diffElement instanceof DiffGroup)) {
-			changes.add(diffElement);
-		} else {
-			for (DiffElement elem : diffElement.getSubDiffElements()) {
-				collectChanges(changes, elem);
-			}
-		}
-	}
-
-	private void applyChanges(EObject oldRootObject, EObject newRootObject) {
+	private void reconcile(Resource originalResource2,
+			XtextResource xtextResource2) {
 		try {
-			final List<DiffElement> changes = getChanges(oldRootObject, newRootObject);
-			final TransactionalEditingDomain editingDomain = TransactionUtil.getEditingDomain(originalResource);
-			AbstractTransactionalCommand gmfCommand = new AbstractTransactionalCommand(editingDomain, "update resource after direct text edit", null) {
-				@Override
-				protected CommandResult doExecuteWithResult(IProgressMonitor monitor, IAdaptable info) throws ExecutionException {
-					try {
-						for (DiffElement change : changes) {
-							System.out.println("## change: " + change);
-							
-							MergeService.merge(change, true);
+
+			IComparisonScope scope = new DefaultComparisonScope(
+					originalResource2, xtextResource2, null);
+			final Comparison comparison = EMFCompare.builder().build()
+					.compare(scope);
+
+			IMerger.Registry mergerRegistry = EMFCompareRCPPlugin.getDefault()
+					.getMergerRegistry();
+			final IBatchMerger merger = new BatchMerger(mergerRegistry);
+
+			final TransactionalEditingDomain editingDomain = TransactionUtil
+					.getEditingDomain(originalResource);
+			editingDomain.getCommandStack().execute(
+					new RecordingCommand(editingDomain,
+							"update resource after direct text edit") {
+
+						@Override
+						protected void doExecute() {
+							System.out.println("merging "+ comparison.getDifferences().size() + " differences");
+							merger.copyAllRightToLeft(
+									comparison.getDifferences(),
+									new BasicMonitor());
 						}
-						return CommandResult.newOKCommandResult();
-					} catch (Exception exc) {
-						return CommandResult.newErrorCommandResult(exc);
-					}
-				}
-			};
-			gmfCommand.execute(new NullProgressMonitor(), null);
+					});
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Activator.logError(e);
 		}
 
 	}
 
 	/**
 	 * Create the XText editor
-	 * @param editorInput the editor input
+	 * 
+	 * @param editorInput
+	 *            the editor input
 	 * @throws Exception
 	 */
 	protected void createXtextEditor(IEditorInput editorInput) throws Exception {
-		DiagramRootEditPart diagramEditPart = (DiagramRootEditPart) hostEditPart.getRoot();
-		Composite parentComposite = (Composite) diagramEditPart.getViewer().getControl();
-		xtextEditorComposite = new Decorations(parentComposite, SWT.RESIZE | SWT.ON_TOP | SWT.BORDER);
+		DiagramRootEditPart diagramEditPart = (DiagramRootEditPart) hostEditPart
+				.getRoot();
+		Composite parentComposite = (Composite) diagramEditPart.getViewer()
+				.getControl();
+		xtextEditorComposite = new Decorations(parentComposite, SWT.RESIZE
+				| SWT.ON_TOP | SWT.BORDER);
 		xtextEditorComposite.setLayout(new FillLayout());
 		IEditorSite editorSite = diagramEditor.getEditorSite();
 		this.xtextEditor = xtextInjector.getInstance(XtextEditor.class);
 		// remove dirty state editor callback
-		xtextEditor.setXtextEditorCallback(new CompoundXtextEditorCallback(Guice.createInjector(new Module() {
-			public void configure(Binder binder) {
-			}
-		})));
+		xtextEditor.setXtextEditorCallback(new CompoundXtextEditorCallback(
+				Guice.createInjector(new Module() {
+					public void configure(Binder binder) {
+					}
+				})));
 		xtextEditor.init(editorSite, editorInput);
 		xtextEditor.createPartControl(xtextEditorComposite);
 		addKeyVerifyListener();
@@ -337,7 +310,8 @@ public class XtextEmbeddedEditor {
 		final StyledText xtextTextWidget = sourceViewer.getTextWidget();
 		xtextTextWidget.addVerifyKeyListener(new VerifyKeyListener() {
 			public void verifyKey(VerifyEvent e) {
-				if ((e.stateMask & SWT.CTRL) != 0 && ((e.keyCode == SWT.KEYPAD_CR) || (e.keyCode == SWT.CR))) {
+				if ((e.stateMask & SWT.CTRL) != 0
+						&& ((e.keyCode == SWT.KEYPAD_CR) || (e.keyCode == SWT.CR))) {
 					e.doit = false;
 				}
 			}
@@ -346,7 +320,8 @@ public class XtextEmbeddedEditor {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				int keyCode = e.keyCode;
-				if ((e.stateMask & SWT.CTRL) != 0 && ((keyCode == SWT.KEYPAD_CR) || (keyCode == SWT.CR))) {
+				if ((e.stateMask & SWT.CTRL) != 0
+						&& ((keyCode == SWT.KEYPAD_CR) || (keyCode == SWT.CR))) {
 					closeEditor(true);
 				}
 				if (keyCode == SWT.ESC) {
@@ -358,32 +333,36 @@ public class XtextEmbeddedEditor {
 
 	private void setEditorRegion() throws BadLocationException {
 		final IXtextDocument xtextDocument = xtextEditor.getDocument();
-		boolean success = xtextEditor.getDocument().modify(new IUnitOfWork<Boolean, XtextResource>() {
+		boolean success = xtextEditor.getDocument().modify(
+				new IUnitOfWork<Boolean, XtextResource>() {
 
-			public Boolean exec(XtextResource state) throws Exception {
-				EObject semanticElementInDocument = state.getEObject(semanticElementFragment);
-				if (semanticElementInDocument == null) {
-					return false;
-				}
-				ICompositeNode xtextNode = getCompositeNode(semanticElementInDocument);
-				if (xtextNode == null) {
-					return false;
-				}
-				// getOffset() and getLength() are trimming whitespaces
-				editorOffset = xtextNode.getOffset();
-				initialEditorSize = xtextNode.getLength();
-				initialDocumentSize = xtextDocument.getLength();
+					public Boolean exec(XtextResource state) throws Exception {
+						EObject semanticElementInDocument = state
+								.getEObject(semanticElementFragment);
+						if (semanticElementInDocument == null) {
+							return false;
+						}
+						ICompositeNode xtextNode = getCompositeNode(semanticElementInDocument);
+						if (xtextNode == null) {
+							return false;
+						}
+						// getOffset() and getLength() are trimming whitespaces
+						editorOffset = xtextNode.getOffset();
+						initialEditorSize = xtextNode.getLength();
+						initialDocumentSize = xtextDocument.getLength();
 
-				// insert a newline directly before and after the node
-				xtextDocument.replace(editorOffset, 0, "\n");
-				xtextDocument.replace(editorOffset + 1 + initialEditorSize, 0, "\n");
-				return true;
-			}
+						// insert a newline directly before and after the node
+						xtextDocument.replace(editorOffset, 0, "\n");
+						xtextDocument.replace(editorOffset + 1
+								+ initialEditorSize, 0, "\n");
+						return true;
+					}
 
-		});
+				});
 		if (success) {
 			xtextEditor.showHighlightRangeOnly(true);
-			xtextEditor.setHighlightRange(editorOffset + 1, initialEditorSize, true);
+			xtextEditor.setHighlightRange(editorOffset + 1, initialEditorSize,
+					true);
 			xtextEditor.setFocus();
 		}
 	}
@@ -402,7 +381,8 @@ public class XtextEmbeddedEditor {
 
 		IFigure figure = hostEditPart.getFigure();
 		Rectangle bounds = figure.getBounds().getCopy();
-		DiagramRootEditPart diagramEditPart = (DiagramRootEditPart) hostEditPart.getRoot();
+		DiagramRootEditPart diagramEditPart = (DiagramRootEditPart) hostEditPart
+				.getRoot();
 		IFigure contentPane = diagramEditPart.getContentPane();
 		contentPane.translateToAbsolute(bounds);
 		EditPartViewer viewer = hostEditPart.getViewer();
@@ -416,10 +396,14 @@ public class XtextEmbeddedEditor {
 		FontData fontData = font.getFontData()[0];
 		int fontHeightInPixel = fontData.getHeight();
 
-		int width = Math.max(fontHeightInPixel * (numColumns + 3), MIN_EDITOR_WIDTH);
-		int height = Math.max(fontHeightInPixel * (numLines + 4), MIN_EDITOR_HEIGHT);
-		xtextEditorComposite.setBounds(bounds.x - 200, bounds.y - 120, width, height);
-		xtextEditorComposite.setBounds(bounds.x - 200, bounds.y - 120, width + 250, height + 50);
+		int width = Math.max(fontHeightInPixel * (numColumns + 3),
+				MIN_EDITOR_WIDTH);
+		int height = Math.max(fontHeightInPixel * (numLines + 4),
+				MIN_EDITOR_HEIGHT);
+		xtextEditorComposite.setBounds(bounds.x - 200, bounds.y - 120, width,
+				height);
+		xtextEditorComposite.setBounds(bounds.x - 200, bounds.y - 120,
+				width + 250, height + 50);
 	}
 
 	private ICompositeNode getCompositeNode(EObject semanticElement) {
@@ -427,12 +411,15 @@ public class XtextEmbeddedEditor {
 	}
 
 	private boolean isDocumentHasErrors(final IXtextDocument xtextDocument) {
-		return (xtextDocument.readOnly(new IUnitOfWork<Boolean, XtextResource>() {
-			public Boolean exec(XtextResource state) throws Exception {
-				IParseResult parseResult = state.getParseResult();
-				return !state.getErrors().isEmpty() || parseResult == null || parseResult.hasSyntaxErrors();
-			}
-		}));
+		return (xtextDocument
+				.readOnly(new IUnitOfWork<Boolean, XtextResource>() {
+					public Boolean exec(XtextResource state) throws Exception {
+						IParseResult parseResult = state.getParseResult();
+						return !state.getErrors().isEmpty()
+								|| parseResult == null
+								|| parseResult.hasSyntaxErrors();
+					}
+				}));
 	}
 
 }

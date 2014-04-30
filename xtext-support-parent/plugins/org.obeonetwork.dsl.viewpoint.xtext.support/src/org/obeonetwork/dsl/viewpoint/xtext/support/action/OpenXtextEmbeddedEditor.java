@@ -14,12 +14,12 @@ package org.obeonetwork.dsl.viewpoint.xtext.support.action;
 import java.util.Collection;
 import java.util.Map;
 
-
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.DiagramEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.IGraphicalEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
+import org.eclipse.sirius.tools.api.ui.IExternalJavaAction;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
@@ -27,8 +27,6 @@ import org.eclipse.ui.PlatformUI;
 import org.obeonetwork.dsl.viewpoint.xtext.support.XtextEmbeddedEditor;
 
 import com.google.inject.Injector;
-
-import fr.obeo.dsl.viewpoint.tools.api.ui.IExternalJavaAction;
 
 public abstract class OpenXtextEmbeddedEditor implements IExternalJavaAction {
 
