@@ -1,9 +1,9 @@
-Xtext Viewpoint integration plug-in
+Xtext Sirius integration plug-in
 -----------------------------------
 
 ### Features
 
-This plug-in provides support to integrate an Xtext editor inside a diagram representation created with Viewpoint.  
+This plug-in provides support to integrate an Xtext editor inside a diagram representation created with Sirius.  
 
 ![Screenshot of diagram without embedded text editor](http://github.com/ObeoNetwork/Xtext-viewpoint-integration/raw/master/screenshot-diagram+text.png "Screenshot without the text editor")
 
@@ -14,8 +14,8 @@ This plug-in provides support to integrate an Xtext editor inside a diagram repr
 
 ### Requires
 
-- Obeo Designer 5.0.4
-- Xtext 2.0
+- Eclipse Sirius 1.x
+- Xtext 2.x
 
 ### How to 
 
@@ -38,7 +38,7 @@ public class OpenEmbeddedEditor extends OpenXtextEmbeddedEditor {
 - register your java action
 
 ```xml
-   <extension point="fr.obeo.dsl.viewpoint.externalJavaAction">
+   <extension point="org.eclipse.sirius.externalJavaAction">
       <javaActions
             actionClass="com.yourcompany.OpenEmbeddedEditor"
             id="OpenEmbeddedEditor">
