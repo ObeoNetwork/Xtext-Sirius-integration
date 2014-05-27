@@ -29,205 +29,201 @@ import org.eclipse.xtext.example.fowlerdsl.statemachine.StatemachinePackage;
 public class CommandImpl extends MinimalEObjectImpl.Container implements Command
 {
   /**
-   * The default value of the '{@link #getName() <em>Name</em>}' attribute.
-   * <!-- begin-user-doc -->
+	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getName()
-   * @generated
-   * @ordered
-   */
+	 * @see #getName()
+	 * @generated
+	 * @ordered
+	 */
   protected static final String NAME_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
-   * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getName()
-   * @generated
-   * @ordered
-   */
+	 * @see #getName()
+	 * @generated
+	 * @ordered
+	 */
   protected String name = NAME_EDEFAULT;
 
   /**
-   * The default value of the '{@link #getCode() <em>Code</em>}' attribute.
-   * <!-- begin-user-doc -->
+	 * The default value of the '{@link #getCode() <em>Code</em>}' attribute.
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getCode()
-   * @generated
-   * @ordered
-   */
+	 * @see #getCode()
+	 * @generated
+	 * @ordered
+	 */
   protected static final String CODE_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getCode() <em>Code</em>}' attribute.
-   * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getCode() <em>Code</em>}' attribute.
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getCode()
-   * @generated
-   * @ordered
-   */
+	 * @see #getCode()
+	 * @generated
+	 * @ordered
+	 */
   protected String code = CODE_EDEFAULT;
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   protected CommandImpl()
   {
-    super();
-  }
+		super();
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   @Override
   protected EClass eStaticClass()
   {
-    return StatemachinePackage.Literals.COMMAND;
-  }
+		return StatemachinePackage.Literals.COMMAND;
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   public String getName()
   {
-    return name;
-  }
+		return name;
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   public void setName(String newName)
   {
-    String oldName = name;
-    name = newName;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, StatemachinePackage.COMMAND__NAME, oldName, name));
-  }
+		String oldName = name;
+		name = newName;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, StatemachinePackage.COMMAND__NAME, oldName, name));
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   public String getCode()
   {
-    return code;
-  }
+		return code;
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   public void setCode(String newCode)
   {
-    String oldCode = code;
-    code = newCode;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, StatemachinePackage.COMMAND__CODE, oldCode, code));
-  }
+		String oldCode = code;
+		code = newCode;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, StatemachinePackage.COMMAND__CODE, oldCode, code));
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
-    switch (featureID)
-    {
-      case StatemachinePackage.COMMAND__NAME:
-        return getName();
-      case StatemachinePackage.COMMAND__CODE:
-        return getCode();
-    }
-    return super.eGet(featureID, resolve, coreType);
-  }
+		switch (featureID) {
+			case StatemachinePackage.COMMAND__NAME:
+				return getName();
+			case StatemachinePackage.COMMAND__CODE:
+				return getCode();
+		}
+		return super.eGet(featureID, resolve, coreType);
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   @Override
   public void eSet(int featureID, Object newValue)
   {
-    switch (featureID)
-    {
-      case StatemachinePackage.COMMAND__NAME:
-        setName((String)newValue);
-        return;
-      case StatemachinePackage.COMMAND__CODE:
-        setCode((String)newValue);
-        return;
-    }
-    super.eSet(featureID, newValue);
-  }
+		switch (featureID) {
+			case StatemachinePackage.COMMAND__NAME:
+				setName((String)newValue);
+				return;
+			case StatemachinePackage.COMMAND__CODE:
+				setCode((String)newValue);
+				return;
+		}
+		super.eSet(featureID, newValue);
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   @Override
   public void eUnset(int featureID)
   {
-    switch (featureID)
-    {
-      case StatemachinePackage.COMMAND__NAME:
-        setName(NAME_EDEFAULT);
-        return;
-      case StatemachinePackage.COMMAND__CODE:
-        setCode(CODE_EDEFAULT);
-        return;
-    }
-    super.eUnset(featureID);
-  }
+		switch (featureID) {
+			case StatemachinePackage.COMMAND__NAME:
+				setName(NAME_EDEFAULT);
+				return;
+			case StatemachinePackage.COMMAND__CODE:
+				setCode(CODE_EDEFAULT);
+				return;
+		}
+		super.eUnset(featureID);
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   @Override
   public boolean eIsSet(int featureID)
   {
-    switch (featureID)
-    {
-      case StatemachinePackage.COMMAND__NAME:
-        return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-      case StatemachinePackage.COMMAND__CODE:
-        return CODE_EDEFAULT == null ? code != null : !CODE_EDEFAULT.equals(code);
-    }
-    return super.eIsSet(featureID);
-  }
+		switch (featureID) {
+			case StatemachinePackage.COMMAND__NAME:
+				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+			case StatemachinePackage.COMMAND__CODE:
+				return CODE_EDEFAULT == null ? code != null : !CODE_EDEFAULT.equals(code);
+		}
+		return super.eIsSet(featureID);
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   @Override
   public String toString()
   {
-    if (eIsProxy()) return super.toString();
+		if (eIsProxy()) return super.toString();
 
-    StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (name: ");
-    result.append(name);
-    result.append(", code: ");
-    result.append(code);
-    result.append(')');
-    return result.toString();
-  }
+		StringBuffer result = new StringBuffer(super.toString());
+		result.append(" (name: ");
+		result.append(name);
+		result.append(", code: ");
+		result.append(code);
+		result.append(')');
+		return result.toString();
+	}
 
 } //CommandImpl

@@ -42,241 +42,232 @@ import org.eclipse.xtext.example.fowlerdsl.statemachine.StatemachinePackage;
 public class StatemachineImpl extends MinimalEObjectImpl.Container implements Statemachine
 {
   /**
-   * The cached value of the '{@link #getEvents() <em>Events</em>}' containment reference list.
-   * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getEvents() <em>Events</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getEvents()
-   * @generated
-   * @ordered
-   */
+	 * @see #getEvents()
+	 * @generated
+	 * @ordered
+	 */
   protected EList<Event> events;
 
   /**
-   * The cached value of the '{@link #getResetEvents() <em>Reset Events</em>}' reference list.
-   * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getResetEvents() <em>Reset Events</em>}' reference list.
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getResetEvents()
-   * @generated
-   * @ordered
-   */
+	 * @see #getResetEvents()
+	 * @generated
+	 * @ordered
+	 */
   protected EList<Event> resetEvents;
 
   /**
-   * The cached value of the '{@link #getCommands() <em>Commands</em>}' containment reference list.
-   * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getCommands() <em>Commands</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getCommands()
-   * @generated
-   * @ordered
-   */
+	 * @see #getCommands()
+	 * @generated
+	 * @ordered
+	 */
   protected EList<Command> commands;
 
   /**
-   * The cached value of the '{@link #getStates() <em>States</em>}' containment reference list.
-   * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getStates() <em>States</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getStates()
-   * @generated
-   * @ordered
-   */
+	 * @see #getStates()
+	 * @generated
+	 * @ordered
+	 */
   protected EList<State> states;
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   protected StatemachineImpl()
   {
-    super();
-  }
+		super();
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   @Override
   protected EClass eStaticClass()
   {
-    return StatemachinePackage.Literals.STATEMACHINE;
-  }
+		return StatemachinePackage.Literals.STATEMACHINE;
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   public EList<Event> getEvents()
   {
-    if (events == null)
-    {
-      events = new EObjectContainmentEList<Event>(Event.class, this, StatemachinePackage.STATEMACHINE__EVENTS);
-    }
-    return events;
-  }
+		if (events == null) {
+			events = new EObjectContainmentEList<Event>(Event.class, this, StatemachinePackage.STATEMACHINE__EVENTS);
+		}
+		return events;
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   public EList<Event> getResetEvents()
   {
-    if (resetEvents == null)
-    {
-      resetEvents = new EObjectResolvingEList<Event>(Event.class, this, StatemachinePackage.STATEMACHINE__RESET_EVENTS);
-    }
-    return resetEvents;
-  }
+		if (resetEvents == null) {
+			resetEvents = new EObjectResolvingEList<Event>(Event.class, this, StatemachinePackage.STATEMACHINE__RESET_EVENTS);
+		}
+		return resetEvents;
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   public EList<Command> getCommands()
   {
-    if (commands == null)
-    {
-      commands = new EObjectContainmentEList<Command>(Command.class, this, StatemachinePackage.STATEMACHINE__COMMANDS);
-    }
-    return commands;
-  }
+		if (commands == null) {
+			commands = new EObjectContainmentEList<Command>(Command.class, this, StatemachinePackage.STATEMACHINE__COMMANDS);
+		}
+		return commands;
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   public EList<State> getStates()
   {
-    if (states == null)
-    {
-      states = new EObjectContainmentEList<State>(State.class, this, StatemachinePackage.STATEMACHINE__STATES);
-    }
-    return states;
-  }
+		if (states == null) {
+			states = new EObjectContainmentEList<State>(State.class, this, StatemachinePackage.STATEMACHINE__STATES);
+		}
+		return states;
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
-    switch (featureID)
-    {
-      case StatemachinePackage.STATEMACHINE__EVENTS:
-        return ((InternalEList<?>)getEvents()).basicRemove(otherEnd, msgs);
-      case StatemachinePackage.STATEMACHINE__COMMANDS:
-        return ((InternalEList<?>)getCommands()).basicRemove(otherEnd, msgs);
-      case StatemachinePackage.STATEMACHINE__STATES:
-        return ((InternalEList<?>)getStates()).basicRemove(otherEnd, msgs);
-    }
-    return super.eInverseRemove(otherEnd, featureID, msgs);
-  }
+		switch (featureID) {
+			case StatemachinePackage.STATEMACHINE__EVENTS:
+				return ((InternalEList<?>)getEvents()).basicRemove(otherEnd, msgs);
+			case StatemachinePackage.STATEMACHINE__COMMANDS:
+				return ((InternalEList<?>)getCommands()).basicRemove(otherEnd, msgs);
+			case StatemachinePackage.STATEMACHINE__STATES:
+				return ((InternalEList<?>)getStates()).basicRemove(otherEnd, msgs);
+		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
-    switch (featureID)
-    {
-      case StatemachinePackage.STATEMACHINE__EVENTS:
-        return getEvents();
-      case StatemachinePackage.STATEMACHINE__RESET_EVENTS:
-        return getResetEvents();
-      case StatemachinePackage.STATEMACHINE__COMMANDS:
-        return getCommands();
-      case StatemachinePackage.STATEMACHINE__STATES:
-        return getStates();
-    }
-    return super.eGet(featureID, resolve, coreType);
-  }
+		switch (featureID) {
+			case StatemachinePackage.STATEMACHINE__EVENTS:
+				return getEvents();
+			case StatemachinePackage.STATEMACHINE__RESET_EVENTS:
+				return getResetEvents();
+			case StatemachinePackage.STATEMACHINE__COMMANDS:
+				return getCommands();
+			case StatemachinePackage.STATEMACHINE__STATES:
+				return getStates();
+		}
+		return super.eGet(featureID, resolve, coreType);
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
-    switch (featureID)
-    {
-      case StatemachinePackage.STATEMACHINE__EVENTS:
-        getEvents().clear();
-        getEvents().addAll((Collection<? extends Event>)newValue);
-        return;
-      case StatemachinePackage.STATEMACHINE__RESET_EVENTS:
-        getResetEvents().clear();
-        getResetEvents().addAll((Collection<? extends Event>)newValue);
-        return;
-      case StatemachinePackage.STATEMACHINE__COMMANDS:
-        getCommands().clear();
-        getCommands().addAll((Collection<? extends Command>)newValue);
-        return;
-      case StatemachinePackage.STATEMACHINE__STATES:
-        getStates().clear();
-        getStates().addAll((Collection<? extends State>)newValue);
-        return;
-    }
-    super.eSet(featureID, newValue);
-  }
+		switch (featureID) {
+			case StatemachinePackage.STATEMACHINE__EVENTS:
+				getEvents().clear();
+				getEvents().addAll((Collection<? extends Event>)newValue);
+				return;
+			case StatemachinePackage.STATEMACHINE__RESET_EVENTS:
+				getResetEvents().clear();
+				getResetEvents().addAll((Collection<? extends Event>)newValue);
+				return;
+			case StatemachinePackage.STATEMACHINE__COMMANDS:
+				getCommands().clear();
+				getCommands().addAll((Collection<? extends Command>)newValue);
+				return;
+			case StatemachinePackage.STATEMACHINE__STATES:
+				getStates().clear();
+				getStates().addAll((Collection<? extends State>)newValue);
+				return;
+		}
+		super.eSet(featureID, newValue);
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   @Override
   public void eUnset(int featureID)
   {
-    switch (featureID)
-    {
-      case StatemachinePackage.STATEMACHINE__EVENTS:
-        getEvents().clear();
-        return;
-      case StatemachinePackage.STATEMACHINE__RESET_EVENTS:
-        getResetEvents().clear();
-        return;
-      case StatemachinePackage.STATEMACHINE__COMMANDS:
-        getCommands().clear();
-        return;
-      case StatemachinePackage.STATEMACHINE__STATES:
-        getStates().clear();
-        return;
-    }
-    super.eUnset(featureID);
-  }
+		switch (featureID) {
+			case StatemachinePackage.STATEMACHINE__EVENTS:
+				getEvents().clear();
+				return;
+			case StatemachinePackage.STATEMACHINE__RESET_EVENTS:
+				getResetEvents().clear();
+				return;
+			case StatemachinePackage.STATEMACHINE__COMMANDS:
+				getCommands().clear();
+				return;
+			case StatemachinePackage.STATEMACHINE__STATES:
+				getStates().clear();
+				return;
+		}
+		super.eUnset(featureID);
+	}
 
   /**
-   * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   */
+	 * @generated
+	 */
   @Override
   public boolean eIsSet(int featureID)
   {
-    switch (featureID)
-    {
-      case StatemachinePackage.STATEMACHINE__EVENTS:
-        return events != null && !events.isEmpty();
-      case StatemachinePackage.STATEMACHINE__RESET_EVENTS:
-        return resetEvents != null && !resetEvents.isEmpty();
-      case StatemachinePackage.STATEMACHINE__COMMANDS:
-        return commands != null && !commands.isEmpty();
-      case StatemachinePackage.STATEMACHINE__STATES:
-        return states != null && !states.isEmpty();
-    }
-    return super.eIsSet(featureID);
-  }
+		switch (featureID) {
+			case StatemachinePackage.STATEMACHINE__EVENTS:
+				return events != null && !events.isEmpty();
+			case StatemachinePackage.STATEMACHINE__RESET_EVENTS:
+				return resetEvents != null && !resetEvents.isEmpty();
+			case StatemachinePackage.STATEMACHINE__COMMANDS:
+				return commands != null && !commands.isEmpty();
+			case StatemachinePackage.STATEMACHINE__STATES:
+				return states != null && !states.isEmpty();
+		}
+		return super.eIsSet(featureID);
+	}
 
 } //StatemachineImpl
