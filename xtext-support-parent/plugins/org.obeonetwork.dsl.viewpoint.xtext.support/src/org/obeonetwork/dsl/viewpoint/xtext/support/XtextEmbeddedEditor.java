@@ -239,12 +239,12 @@ public class XtextEmbeddedEditor {
 		}
 	}
 
-	private void reconcile(Resource originalResource2,
-			XtextResource xtextResource2) {
+	private void reconcile(Resource resourceInSirius,
+			XtextResource resourceInEmbeddedEditor) {
 		try {
 
 			IComparisonScope scope = new DefaultComparisonScope(
-					originalResource2, xtextResource2, null);
+					resourceInSirius, resourceInEmbeddedEditor, null);
 			final Comparison comparison = EMFCompare.builder().build()
 					.compare(scope);
 
@@ -260,7 +260,6 @@ public class XtextEmbeddedEditor {
 
 						@Override
 						protected void doExecute() {
-							System.out.println("merging "+ comparison.getDifferences().size() + " differences");
 							merger.copyAllRightToLeft(
 									comparison.getDifferences(),
 									new BasicMonitor());
