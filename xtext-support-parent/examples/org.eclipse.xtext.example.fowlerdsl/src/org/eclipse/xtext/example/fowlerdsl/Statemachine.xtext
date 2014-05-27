@@ -1,0 +1,39 @@
+grammar org.eclipse.xtext.example.fowlerdsl.Statemachine with org.eclipse.xtext.xbase.Xbase
+
+generate statemachine "http://www.eclipse.org/xtext/example/fowlerdsl/Statemachine"
+
+Statemachine :
+     {Statemachine}
+	importSection=XImportSection?
+	('events' 
+		events+=Event+ 
+	'end')?
+	('resetEvents' 
+		resetEvents+=[Event]+ 
+	'end')?
+	('commands' 
+		commands+=Command+ 
+	'end')?	
+	states+=State*
+;
+
+Event:
+	name=ID code=ID
+;
+
+Command:
+	name=ID code=ID
+	(body=XBlockExpression)?
+;
+
+
+State:
+	'state' name=ID		
+		('actions' '{' actions+=[Command]+ '}')?
+		transitions+=Transition*
+	'end'
+;
+
+Transition:
+	event=[Event] '=>' state=[State]
+;

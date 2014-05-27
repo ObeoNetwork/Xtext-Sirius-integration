@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: org.eclipse.sirius.example.fowlerdsl.design
+Bundle-SymbolicName: org.eclipse.sirius.example.fowlerdsl.design;singleton:=true
+Bundle-Version: 1.0.0
+Bundle-Activator: defaultpackage.Activator
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.sirius,
+ org.eclipse.sirius.common.acceleo.mtl,
+ org.obeonetwork.dsl.viewpoint.xtext.support;bundle-version="1.0.0",
+ org.eclipse.xtext.example.fowlerdsl;bundle-version="2.5.4",
+ org.eclipse.xtext.example.fowlerdsl.ui;bundle-version="1.0.0",
+ org.eclipse.core.resources;bundle-version="3.9.0"
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
