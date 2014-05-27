@@ -39,7 +39,6 @@ import org.eclipse.gmf.runtime.diagram.ui.editparts.IGraphicalEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditDomain;
 import org.eclipse.gmf.runtime.diagram.ui.parts.IDiagramEditDomain;
 import org.eclipse.jface.text.BadLocationException;
-import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.sirius.viewpoint.DSemanticDecorator;
 import org.eclipse.sirius.viewpoint.ViewpointPackage;
 import org.eclipse.swt.SWT;
@@ -57,24 +56,22 @@ import org.eclipse.swt.widgets.Decorations;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.IEditorSite;
-import org.eclipse.xtext.EcoreUtil2;
 import org.eclipse.xtext.nodemodel.ICompositeNode;
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
 import org.eclipse.xtext.parser.IParseResult;
 import org.eclipse.xtext.resource.IResourceFactory;
 import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.resource.XtextResourceSet;
-import org.eclipse.xtext.ui.editor.CompoundXtextEditorCallback;
-import org.eclipse.xtext.ui.editor.XtextEditor;
+import org.eclipse.xtext.ui.editor.XtextSourceViewer;
+import org.eclipse.xtext.ui.editor.embedded.EmbeddedEditor;
+import org.eclipse.xtext.ui.editor.embedded.EmbeddedEditorFactory;
+import org.eclipse.xtext.ui.editor.embedded.EmbeddedEditorModelAccess;
+import org.eclipse.xtext.ui.editor.embedded.IEditedResourceProvider;
 import org.eclipse.xtext.ui.editor.info.ResourceWorkingCopyFileEditorInput;
 import org.eclipse.xtext.ui.editor.model.IXtextDocument;
 import org.eclipse.xtext.util.concurrent.IUnitOfWork;
 
-import com.google.inject.Binder;
-import com.google.inject.Guice;
 import com.google.inject.Injector;
-import com.google.inject.Module;
 
 /* largely inspired by "org.eclipse.xtext.gmf.glue" from XText examples */
 public class XtextEmbeddedEditor {
@@ -87,15 +84,7 @@ public class XtextEmbeddedEditor {
 
 	private IEditorPart diagramEditor;
 
-	private XtextEditor xtextEditor;
-
-	private int editorOffset;
-
-	private int initialEditorSize;
-
-	private int initialDocumentSize;
-
-	private Composite xtextEditorComposite;
+	private EmbeddedEditorModelAccess xtextPartialEditor;
 
 	private final Injector xtextInjector;
 
@@ -104,6 +93,10 @@ public class XtextEmbeddedEditor {
 	private XtextResource xtextResource;
 
 	private String semanticElementFragment;
+
+	private Decorations xtextEditorComposite;
+
+	private EmbeddedEditor xTextEmbeddedEditor;
 
 	public XtextEmbeddedEditor(IGraphicalEditPart editPart,
 			Injector xtextInjector) {
@@ -135,8 +128,10 @@ public class XtextEmbeddedEditor {
 			// Clone root EObject
 			EObject semanticElement = EcoreUtil.copy(originalResource
 					.getContents().get(0));
-			this.xtextResource = createVirtualXtextResource(
-					originalResource.getURI(), semanticElement);
+			if (this.xtextResource == null) {
+				this.xtextResource = createVirtualXtextResource(
+						originalResource.getURI(), semanticElement);
+			}
 
 			// TODO manage multi resource with Xtext Linking or Scoping service
 			semanticElementFragment = originalResource
@@ -149,8 +144,7 @@ public class XtextEmbeddedEditor {
 					.getDiagramEditDomain();
 			diagramEditor = ((DiagramEditDomain) diagramEditDomain)
 					.getEditorPart();
-			createXtextEditor(new ResourceWorkingCopyFileEditorInput(
-					xtextResource));
+			createXtextEditor();
 		} catch (Exception e) {
 			Activator.logError(e);
 		} finally {
@@ -166,28 +160,20 @@ public class XtextEmbeddedEditor {
 	 * @param isReconcile
 	 */
 	public void closeEditor(boolean isReconcile) {
-		if (xtextEditor != null) {
+		if (xtextPartialEditor != null) {
 			if (isReconcile) {
 				try {
-					final IXtextDocument xtextDocument = xtextEditor
-							.getDocument();
-					if (!isDocumentHasErrors(xtextDocument)) {
-						// subtract 2 for the artificial newlines
-						int documentGrowth = xtextDocument.getLength()
-								- initialDocumentSize - 2;
-						String newText = xtextDocument.get(editorOffset + 1,
-								initialEditorSize + documentGrowth);
-						updateXtextResource(editorOffset, initialEditorSize,
-								newText);
-					}
+					updateXtextResource();
 				} catch (Exception exc) {
 					Activator.logError(exc);
 				}
 			}
-			xtextEditor.dispose();
-			xtextEditorComposite.setVisible(false);
-			xtextEditorComposite.dispose();
-			xtextEditor = null;
+			// xtextEditor.dispose();
+			if (xtextEditorComposite != null) {
+				this.xtextEditorComposite.dispose();
+				xtextEditorComposite = null;
+			}
+			xtextPartialEditor = null;
 		}
 	}
 
@@ -195,6 +181,7 @@ public class XtextEmbeddedEditor {
 			EObject semanticElement) throws IOException {
 		IResourceFactory resourceFactory = xtextInjector
 				.getInstance(IResourceFactory.class);
+		// TODO use the synthetic scheme.
 		XtextResourceSet rs = xtextInjector.getInstance(XtextResourceSet.class);
 		rs.setClasspathURIContext(getClass());
 		// Create virtual resource
@@ -213,30 +200,20 @@ public class XtextEmbeddedEditor {
 		return xtextVirtualResource;
 	}
 
-
-	protected void updateXtextResource(final int offset,
-			final int replacedTextLength, final String newText)
-			throws IOException, BadLocationException {
-		ICompositeNode oldRootNode = xtextResource.getParseResult()
-				.getRootNode();
-		// final IParseResult parseResult =
-		// xtextResource.getParser().reparse(oldRootNode, offset,
-		// Reparse the entire document
-		String originalRegion = NodeModelUtils.getTokenText(oldRootNode);
-		int changeOffset = offset - oldRootNode.getTotalOffset();
-		StringBuffer reparseRegion = new StringBuffer();
-		reparseRegion.append(originalRegion.substring(0, changeOffset));
-		reparseRegion.append(newText);
-		if (changeOffset + replacedTextLength < originalRegion.length())
-			reparseRegion.append(originalRegion.substring(changeOffset
-					+ replacedTextLength));
-		String allText = reparseRegion.toString();
-		xtextResource.reparse(allText);
+	protected void updateXtextResource() throws IOException,
+			BadLocationException {
+		String newText = xtextPartialEditor.getSerializedModel();
+		xtextResource.reparse(newText);
 		EcoreUtil.resolveAll(xtextResource);
 		final IParseResult parseResult = xtextResource.getParseResult();
-		if (!parseResult.hasSyntaxErrors()) {
+		if (!parseResult.hasSyntaxErrors() && !hasDanglingRefs(xtextResource)) {
 			reconcile(originalResource, xtextResource);
 		}
+	}
+
+	private boolean hasDanglingRefs(XtextResource xtextResource2) {
+		return EcoreUtil.UnresolvedProxyCrossReferencer.find(xtextResource2)
+				.size() > 0;
 	}
 
 	private void reconcile(Resource resourceInSirius,
@@ -278,103 +255,68 @@ public class XtextEmbeddedEditor {
 	 *            the editor input
 	 * @throws Exception
 	 */
-	protected void createXtextEditor(IEditorInput editorInput) throws Exception {
+	protected void createXtextEditor() throws Exception {
 		DiagramRootEditPart diagramEditPart = (DiagramRootEditPart) hostEditPart
 				.getRoot();
 		Composite parentComposite = (Composite) diagramEditPart.getViewer()
 				.getControl();
+
+		EObject semanticElementInDocument = xtextResource
+				.getEObject(semanticElementFragment);
+		ICompositeNode rootNode = xtextResource.getParseResult().getRootNode();
+		String allText = rootNode.getText();
+		ICompositeNode elementNode = NodeModelUtils
+				.findActualNodeFor(semanticElementInDocument);
+		String prefix = allText.substring(0, elementNode.getOffset() - 1);
+		String editablePart = allText.substring(elementNode.getOffset(),
+				elementNode.getEndOffset());
+		String suffix = allText.substring(elementNode.getEndOffset());
 		xtextEditorComposite = new Decorations(parentComposite, SWT.RESIZE
 				| SWT.ON_TOP | SWT.BORDER);
 		xtextEditorComposite.setLayout(new FillLayout());
-		IEditorSite editorSite = diagramEditor.getEditorSite();
-		this.xtextEditor = xtextInjector.getInstance(XtextEditor.class);
-		// remove dirty state editor callback
-		xtextEditor.setXtextEditorCallback(new CompoundXtextEditorCallback(
-				Guice.createInjector(new Module() {
-					public void configure(Binder binder) {
-					}
-				})));
-		xtextEditor.init(editorSite, editorInput);
-		xtextEditor.createPartControl(xtextEditorComposite);
+
+		EmbeddedEditorFactory factory = new EmbeddedEditorFactory();
+		xtextInjector.injectMembers(factory);
+		xTextEmbeddedEditor = factory.newEditor(new IEditedResourceProvider() {
+
+			@Override
+			public XtextResource createResource() {
+				return xtextResource;
+			}
+		}).showErrorAndWarningAnnotations().withParent(xtextEditorComposite);
+		xtextPartialEditor = xTextEmbeddedEditor.createPartialEditor(prefix,
+				editablePart, suffix, true);
+
 		addKeyVerifyListener();
-		setEditorRegion();
 		setEditorBounds();
 		xtextEditorComposite.setVisible(true);
 		xtextEditorComposite.forceFocus();
-		xtextEditor.setFocus();
 	}
 
 	private void addKeyVerifyListener() {
-		ISourceViewer sourceViewer = xtextEditor.getInternalSourceViewer();
-		final StyledText xtextTextWidget = sourceViewer.getTextWidget();
+		final StyledText xtextTextWidget = xTextEmbeddedEditor.getViewer()
+				.getTextWidget();
 		xtextTextWidget.addVerifyKeyListener(new VerifyKeyListener() {
 			public void verifyKey(VerifyEvent e) {
-				if ((e.stateMask & SWT.CTRL) != 0
-						&& ((e.keyCode == SWT.KEYPAD_CR) || (e.keyCode == SWT.CR))) {
-					e.doit = false;
-				}
-			}
-		});
-		xtextTextWidget.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed(KeyEvent e) {
 				int keyCode = e.keyCode;
 				if ((e.stateMask & SWT.CTRL) != 0
 						&& ((keyCode == SWT.KEYPAD_CR) || (keyCode == SWT.CR))) {
+					e.doit = false;
 					closeEditor(true);
 				}
 				if (keyCode == SWT.ESC) {
-					closeEditor(true);
+					e.doit = false;
+					closeEditor(false);
 				}
+
 			}
 		});
 	}
 
-	private void setEditorRegion() throws BadLocationException {
-		final IXtextDocument xtextDocument = xtextEditor.getDocument();
-		boolean success = xtextEditor.getDocument().modify(
-				new IUnitOfWork<Boolean, XtextResource>() {
-
-					public Boolean exec(XtextResource state) throws Exception {
-						EObject semanticElementInDocument = state
-								.getEObject(semanticElementFragment);
-						if (semanticElementInDocument == null) {
-							return false;
-						}
-						ICompositeNode xtextNode = getCompositeNode(semanticElementInDocument);
-						if (xtextNode == null) {
-							return false;
-						}
-						// getOffset() and getLength() are trimming whitespaces
-						editorOffset = xtextNode.getOffset();
-						initialEditorSize = xtextNode.getLength();
-						initialDocumentSize = xtextDocument.getLength();
-
-						// insert a newline directly before and after the node
-						xtextDocument.replace(editorOffset, 0, "\n");
-						xtextDocument.replace(editorOffset + 1
-								+ initialEditorSize, 0, "\n");
-						return true;
-					}
-
-				});
-		if (success) {
-			xtextEditor.showHighlightRangeOnly(true);
-			xtextEditor.setHighlightRange(editorOffset + 1, initialEditorSize,
-					true);
-			xtextEditor.setFocus();
-		}
-	}
-
 	private void setEditorBounds() {
-		final IXtextDocument xtextDocument = xtextEditor.getDocument();
 		// mind the added newlines
-		String editString = "";
-		try {
-			editString = xtextDocument.get(editorOffset + 1, initialEditorSize);
-		} catch (BadLocationException exc) {
-			Activator.logError(exc);
-		}
+		String editString = xtextPartialEditor.getEditablePart();
+
 		int numLines = StringUtil.getNumLines(editString);
 		int numColumns = StringUtil.getMaxColumns(editString);
 
@@ -403,22 +345,6 @@ public class XtextEmbeddedEditor {
 				height);
 		xtextEditorComposite.setBounds(bounds.x - 200, bounds.y - 120,
 				width + 250, height + 50);
-	}
-
-	private ICompositeNode getCompositeNode(EObject semanticElement) {
-		return NodeModelUtils.getNode(semanticElement);
-	}
-
-	private boolean isDocumentHasErrors(final IXtextDocument xtextDocument) {
-		return (xtextDocument
-				.readOnly(new IUnitOfWork<Boolean, XtextResource>() {
-					public Boolean exec(XtextResource state) throws Exception {
-						IParseResult parseResult = state.getParseResult();
-						return !state.getErrors().isEmpty()
-								|| parseResult == null
-								|| parseResult.hasSyntaxErrors();
-					}
-				}));
 	}
 
 }
