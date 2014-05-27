@@ -4,7 +4,6 @@ package org.eclipse.xtext.example.fowlerdsl.statemachine.impl;
 
 import java.util.Collection;
 
-import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.common.util.EList;
@@ -12,7 +11,6 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
@@ -25,8 +23,6 @@ import org.eclipse.xtext.example.fowlerdsl.statemachine.State;
 import org.eclipse.xtext.example.fowlerdsl.statemachine.Statemachine;
 import org.eclipse.xtext.example.fowlerdsl.statemachine.StatemachinePackage;
 
-import org.eclipse.xtext.xtype.XImportSection;
-
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Statemachine</b></em>'.
@@ -34,7 +30,6 @@ import org.eclipse.xtext.xtype.XImportSection;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.eclipse.xtext.example.fowlerdsl.statemachine.impl.StatemachineImpl#getImportSection <em>Import Section</em>}</li>
  *   <li>{@link org.eclipse.xtext.example.fowlerdsl.statemachine.impl.StatemachineImpl#getEvents <em>Events</em>}</li>
  *   <li>{@link org.eclipse.xtext.example.fowlerdsl.statemachine.impl.StatemachineImpl#getResetEvents <em>Reset Events</em>}</li>
  *   <li>{@link org.eclipse.xtext.example.fowlerdsl.statemachine.impl.StatemachineImpl#getCommands <em>Commands</em>}</li>
@@ -46,16 +41,6 @@ import org.eclipse.xtext.xtype.XImportSection;
  */
 public class StatemachineImpl extends MinimalEObjectImpl.Container implements Statemachine
 {
-  /**
-   * The cached value of the '{@link #getImportSection() <em>Import Section</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getImportSection()
-   * @generated
-   * @ordered
-   */
-  protected XImportSection importSection;
-
   /**
    * The cached value of the '{@link #getEvents() <em>Events</em>}' containment reference list.
    * <!-- begin-user-doc -->
@@ -115,54 +100,6 @@ public class StatemachineImpl extends MinimalEObjectImpl.Container implements St
   protected EClass eStaticClass()
   {
     return StatemachinePackage.Literals.STATEMACHINE;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public XImportSection getImportSection()
-  {
-    return importSection;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public NotificationChain basicSetImportSection(XImportSection newImportSection, NotificationChain msgs)
-  {
-    XImportSection oldImportSection = importSection;
-    importSection = newImportSection;
-    if (eNotificationRequired())
-    {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, StatemachinePackage.STATEMACHINE__IMPORT_SECTION, oldImportSection, newImportSection);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
-    }
-    return msgs;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setImportSection(XImportSection newImportSection)
-  {
-    if (newImportSection != importSection)
-    {
-      NotificationChain msgs = null;
-      if (importSection != null)
-        msgs = ((InternalEObject)importSection).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - StatemachinePackage.STATEMACHINE__IMPORT_SECTION, null, msgs);
-      if (newImportSection != null)
-        msgs = ((InternalEObject)newImportSection).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - StatemachinePackage.STATEMACHINE__IMPORT_SECTION, null, msgs);
-      msgs = basicSetImportSection(newImportSection, msgs);
-      if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, StatemachinePackage.STATEMACHINE__IMPORT_SECTION, newImportSection, newImportSection));
   }
 
   /**
@@ -231,8 +168,6 @@ public class StatemachineImpl extends MinimalEObjectImpl.Container implements St
   {
     switch (featureID)
     {
-      case StatemachinePackage.STATEMACHINE__IMPORT_SECTION:
-        return basicSetImportSection(null, msgs);
       case StatemachinePackage.STATEMACHINE__EVENTS:
         return ((InternalEList<?>)getEvents()).basicRemove(otherEnd, msgs);
       case StatemachinePackage.STATEMACHINE__COMMANDS:
@@ -253,8 +188,6 @@ public class StatemachineImpl extends MinimalEObjectImpl.Container implements St
   {
     switch (featureID)
     {
-      case StatemachinePackage.STATEMACHINE__IMPORT_SECTION:
-        return getImportSection();
       case StatemachinePackage.STATEMACHINE__EVENTS:
         return getEvents();
       case StatemachinePackage.STATEMACHINE__RESET_EVENTS:
@@ -278,9 +211,6 @@ public class StatemachineImpl extends MinimalEObjectImpl.Container implements St
   {
     switch (featureID)
     {
-      case StatemachinePackage.STATEMACHINE__IMPORT_SECTION:
-        setImportSection((XImportSection)newValue);
-        return;
       case StatemachinePackage.STATEMACHINE__EVENTS:
         getEvents().clear();
         getEvents().addAll((Collection<? extends Event>)newValue);
@@ -311,9 +241,6 @@ public class StatemachineImpl extends MinimalEObjectImpl.Container implements St
   {
     switch (featureID)
     {
-      case StatemachinePackage.STATEMACHINE__IMPORT_SECTION:
-        setImportSection((XImportSection)null);
-        return;
       case StatemachinePackage.STATEMACHINE__EVENTS:
         getEvents().clear();
         return;
@@ -340,8 +267,6 @@ public class StatemachineImpl extends MinimalEObjectImpl.Container implements St
   {
     switch (featureID)
     {
-      case StatemachinePackage.STATEMACHINE__IMPORT_SECTION:
-        return importSection != null;
       case StatemachinePackage.STATEMACHINE__EVENTS:
         return events != null && !events.isEmpty();
       case StatemachinePackage.STATEMACHINE__RESET_EVENTS:

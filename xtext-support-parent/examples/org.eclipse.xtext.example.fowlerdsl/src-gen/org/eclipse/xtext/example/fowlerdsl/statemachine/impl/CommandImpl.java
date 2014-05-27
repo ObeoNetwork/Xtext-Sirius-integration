@@ -3,18 +3,14 @@
 package org.eclipse.xtext.example.fowlerdsl.statemachine.impl;
 
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 import org.eclipse.xtext.example.fowlerdsl.statemachine.Command;
 import org.eclipse.xtext.example.fowlerdsl.statemachine.StatemachinePackage;
-
-import org.eclipse.xtext.xbase.XExpression;
 
 /**
  * <!-- begin-user-doc -->
@@ -25,7 +21,6 @@ import org.eclipse.xtext.xbase.XExpression;
  * <ul>
  *   <li>{@link org.eclipse.xtext.example.fowlerdsl.statemachine.impl.CommandImpl#getName <em>Name</em>}</li>
  *   <li>{@link org.eclipse.xtext.example.fowlerdsl.statemachine.impl.CommandImpl#getCode <em>Code</em>}</li>
- *   <li>{@link org.eclipse.xtext.example.fowlerdsl.statemachine.impl.CommandImpl#getBody <em>Body</em>}</li>
  * </ul>
  * </p>
  *
@@ -72,16 +67,6 @@ public class CommandImpl extends MinimalEObjectImpl.Container implements Command
    * @ordered
    */
   protected String code = CODE_EDEFAULT;
-
-  /**
-   * The cached value of the '{@link #getBody() <em>Body</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getBody()
-   * @generated
-   * @ordered
-   */
-  protected XExpression body;
 
   /**
    * <!-- begin-user-doc -->
@@ -155,70 +140,6 @@ public class CommandImpl extends MinimalEObjectImpl.Container implements Command
    * <!-- end-user-doc -->
    * @generated
    */
-  public XExpression getBody()
-  {
-    return body;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public NotificationChain basicSetBody(XExpression newBody, NotificationChain msgs)
-  {
-    XExpression oldBody = body;
-    body = newBody;
-    if (eNotificationRequired())
-    {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, StatemachinePackage.COMMAND__BODY, oldBody, newBody);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
-    }
-    return msgs;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setBody(XExpression newBody)
-  {
-    if (newBody != body)
-    {
-      NotificationChain msgs = null;
-      if (body != null)
-        msgs = ((InternalEObject)body).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - StatemachinePackage.COMMAND__BODY, null, msgs);
-      if (newBody != null)
-        msgs = ((InternalEObject)newBody).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - StatemachinePackage.COMMAND__BODY, null, msgs);
-      msgs = basicSetBody(newBody, msgs);
-      if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, StatemachinePackage.COMMAND__BODY, newBody, newBody));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
-  {
-    switch (featureID)
-    {
-      case StatemachinePackage.COMMAND__BODY:
-        return basicSetBody(null, msgs);
-    }
-    return super.eInverseRemove(otherEnd, featureID, msgs);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
@@ -228,8 +149,6 @@ public class CommandImpl extends MinimalEObjectImpl.Container implements Command
         return getName();
       case StatemachinePackage.COMMAND__CODE:
         return getCode();
-      case StatemachinePackage.COMMAND__BODY:
-        return getBody();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -249,9 +168,6 @@ public class CommandImpl extends MinimalEObjectImpl.Container implements Command
         return;
       case StatemachinePackage.COMMAND__CODE:
         setCode((String)newValue);
-        return;
-      case StatemachinePackage.COMMAND__BODY:
-        setBody((XExpression)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -273,9 +189,6 @@ public class CommandImpl extends MinimalEObjectImpl.Container implements Command
       case StatemachinePackage.COMMAND__CODE:
         setCode(CODE_EDEFAULT);
         return;
-      case StatemachinePackage.COMMAND__BODY:
-        setBody((XExpression)null);
-        return;
     }
     super.eUnset(featureID);
   }
@@ -294,8 +207,6 @@ public class CommandImpl extends MinimalEObjectImpl.Container implements Command
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
       case StatemachinePackage.COMMAND__CODE:
         return CODE_EDEFAULT == null ? code != null : !CODE_EDEFAULT.equals(code);
-      case StatemachinePackage.COMMAND__BODY:
-        return body != null;
     }
     return super.eIsSet(featureID);
   }

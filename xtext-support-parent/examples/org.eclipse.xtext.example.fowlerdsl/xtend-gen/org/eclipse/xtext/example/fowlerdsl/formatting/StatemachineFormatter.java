@@ -76,9 +76,5 @@ public class StatemachineFormatter extends AbstractDeclarativeFormatter {
     StatemachineGrammarAccess.TransitionElements _transitionAccess = this._statemachineGrammarAccess.getTransitionAccess();
     Assignment _eventAssignment_0 = _transitionAccess.getEventAssignment_0();
     _setLinewrap_2.before(_eventAssignment_0);
-    FormattingConfig.LinewrapLocator _setLinewrap_3 = c.setLinewrap(1, 1, 2);
-    StatemachineGrammarAccess.StatemachineElements _statemachineAccess = this._statemachineGrammarAccess.getStatemachineAccess();
-    Assignment _statesAssignment_5 = _statemachineAccess.getStatesAssignment_5();
-    _setLinewrap_3.before(_statesAssignment_5);
   }
 }

@@ -17,10 +17,6 @@ import org.eclipse.xtext.example.fowlerdsl.statemachine.StatemachineFactory;
 import org.eclipse.xtext.example.fowlerdsl.statemachine.StatemachinePackage;
 import org.eclipse.xtext.example.fowlerdsl.statemachine.Transition;
 
-import org.eclipse.xtext.xbase.XbasePackage;
-
-import org.eclipse.xtext.xtype.XtypePackage;
-
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model <b>Package</b>.
@@ -112,10 +108,6 @@ public class StatemachinePackageImpl extends EPackageImpl implements Statemachin
 
     isInited = true;
 
-    // Initialize simple dependencies
-    XbasePackage.eINSTANCE.eClass();
-    XtypePackage.eINSTANCE.eClass();
-
     // Create package meta-data objects
     theStatemachinePackage.createPackageContents();
 
@@ -146,7 +138,7 @@ public class StatemachinePackageImpl extends EPackageImpl implements Statemachin
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getStatemachine_ImportSection()
+  public EReference getStatemachine_Events()
   {
     return (EReference)statemachineEClass.getEStructuralFeatures().get(0);
   }
@@ -156,7 +148,7 @@ public class StatemachinePackageImpl extends EPackageImpl implements Statemachin
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getStatemachine_Events()
+  public EReference getStatemachine_ResetEvents()
   {
     return (EReference)statemachineEClass.getEStructuralFeatures().get(1);
   }
@@ -166,7 +158,7 @@ public class StatemachinePackageImpl extends EPackageImpl implements Statemachin
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getStatemachine_ResetEvents()
+  public EReference getStatemachine_Commands()
   {
     return (EReference)statemachineEClass.getEStructuralFeatures().get(2);
   }
@@ -176,19 +168,9 @@ public class StatemachinePackageImpl extends EPackageImpl implements Statemachin
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getStatemachine_Commands()
-  {
-    return (EReference)statemachineEClass.getEStructuralFeatures().get(3);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EReference getStatemachine_States()
   {
-    return (EReference)statemachineEClass.getEStructuralFeatures().get(4);
+    return (EReference)statemachineEClass.getEStructuralFeatures().get(3);
   }
 
   /**
@@ -249,16 +231,6 @@ public class StatemachinePackageImpl extends EPackageImpl implements Statemachin
   public EAttribute getCommand_Code()
   {
     return (EAttribute)commandEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getCommand_Body()
-  {
-    return (EReference)commandEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -362,7 +334,6 @@ public class StatemachinePackageImpl extends EPackageImpl implements Statemachin
 
     // Create classes and their features
     statemachineEClass = createEClass(STATEMACHINE);
-    createEReference(statemachineEClass, STATEMACHINE__IMPORT_SECTION);
     createEReference(statemachineEClass, STATEMACHINE__EVENTS);
     createEReference(statemachineEClass, STATEMACHINE__RESET_EVENTS);
     createEReference(statemachineEClass, STATEMACHINE__COMMANDS);
@@ -375,7 +346,6 @@ public class StatemachinePackageImpl extends EPackageImpl implements Statemachin
     commandEClass = createEClass(COMMAND);
     createEAttribute(commandEClass, COMMAND__NAME);
     createEAttribute(commandEClass, COMMAND__CODE);
-    createEReference(commandEClass, COMMAND__BODY);
 
     stateEClass = createEClass(STATE);
     createEAttribute(stateEClass, STATE__NAME);
@@ -411,10 +381,6 @@ public class StatemachinePackageImpl extends EPackageImpl implements Statemachin
     setNsPrefix(eNS_PREFIX);
     setNsURI(eNS_URI);
 
-    // Obtain other dependent packages
-    XtypePackage theXtypePackage = (XtypePackage)EPackage.Registry.INSTANCE.getEPackage(XtypePackage.eNS_URI);
-    XbasePackage theXbasePackage = (XbasePackage)EPackage.Registry.INSTANCE.getEPackage(XbasePackage.eNS_URI);
-
     // Create type parameters
 
     // Set bounds for type parameters
@@ -423,7 +389,6 @@ public class StatemachinePackageImpl extends EPackageImpl implements Statemachin
 
     // Initialize classes and features; add operations and parameters
     initEClass(statemachineEClass, Statemachine.class, "Statemachine", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getStatemachine_ImportSection(), theXtypePackage.getXImportSection(), null, "importSection", null, 0, 1, Statemachine.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getStatemachine_Events(), this.getEvent(), null, "events", null, 0, -1, Statemachine.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getStatemachine_ResetEvents(), this.getEvent(), null, "resetEvents", null, 0, -1, Statemachine.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getStatemachine_Commands(), this.getCommand(), null, "commands", null, 0, -1, Statemachine.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -436,7 +401,6 @@ public class StatemachinePackageImpl extends EPackageImpl implements Statemachin
     initEClass(commandEClass, Command.class, "Command", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getCommand_Name(), ecorePackage.getEString(), "name", null, 0, 1, Command.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getCommand_Code(), ecorePackage.getEString(), "code", null, 0, 1, Command.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getCommand_Body(), theXbasePackage.getXExpression(), null, "body", null, 0, 1, Command.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(stateEClass, State.class, "State", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getState_Name(), ecorePackage.getEString(), "name", null, 0, 1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

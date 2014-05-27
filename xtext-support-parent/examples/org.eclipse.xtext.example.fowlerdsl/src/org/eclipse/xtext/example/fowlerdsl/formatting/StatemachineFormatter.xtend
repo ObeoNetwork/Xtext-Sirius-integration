@@ -52,7 +52,6 @@ class StatemachineFormatter extends AbstractDeclarativeFormatter {
 //		c.setLinewrap(1, 1, 2).before(statemachineAccess.servicesKeyword_4_0)
 //		c.setLinewrap(1, 1, 2).before(statemachineAccess.commandsKeyword_3_0)
 //		c.setLinewrap(1, 1, 2).before(statemachineAccess.commandsAssignment_3_1)
-		c.setLinewrap(1, 1, 2).before(statemachineAccess.statesAssignment_5)
 //		c.setLinewrap(1, 1, 2).before(statemachineAccess.servicesAssignment_4_1)
 //		c.setLinewrap(1, 1, 2).before(statemachineAccess.eventsAssignment_1_1)
 

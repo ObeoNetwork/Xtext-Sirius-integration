@@ -67,22 +67,13 @@ public interface StatemachinePackage extends EPackage
   int STATEMACHINE = 0;
 
   /**
-   * The feature id for the '<em><b>Import Section</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int STATEMACHINE__IMPORT_SECTION = 0;
-
-  /**
    * The feature id for the '<em><b>Events</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int STATEMACHINE__EVENTS = 1;
+  int STATEMACHINE__EVENTS = 0;
 
   /**
    * The feature id for the '<em><b>Reset Events</b></em>' reference list.
@@ -91,7 +82,7 @@ public interface StatemachinePackage extends EPackage
    * @generated
    * @ordered
    */
-  int STATEMACHINE__RESET_EVENTS = 2;
+  int STATEMACHINE__RESET_EVENTS = 1;
 
   /**
    * The feature id for the '<em><b>Commands</b></em>' containment reference list.
@@ -100,7 +91,7 @@ public interface StatemachinePackage extends EPackage
    * @generated
    * @ordered
    */
-  int STATEMACHINE__COMMANDS = 3;
+  int STATEMACHINE__COMMANDS = 2;
 
   /**
    * The feature id for the '<em><b>States</b></em>' containment reference list.
@@ -109,7 +100,7 @@ public interface StatemachinePackage extends EPackage
    * @generated
    * @ordered
    */
-  int STATEMACHINE__STATES = 4;
+  int STATEMACHINE__STATES = 3;
 
   /**
    * The number of structural features of the '<em>Statemachine</em>' class.
@@ -118,7 +109,7 @@ public interface StatemachinePackage extends EPackage
    * @generated
    * @ordered
    */
-  int STATEMACHINE_FEATURE_COUNT = 5;
+  int STATEMACHINE_FEATURE_COUNT = 4;
 
   /**
    * The meta object id for the '{@link org.eclipse.xtext.example.fowlerdsl.statemachine.impl.EventImpl <em>Event</em>}' class.
@@ -186,22 +177,13 @@ public interface StatemachinePackage extends EPackage
   int COMMAND__CODE = 1;
 
   /**
-   * The feature id for the '<em><b>Body</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int COMMAND__BODY = 2;
-
-  /**
    * The number of structural features of the '<em>Command</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int COMMAND_FEATURE_COUNT = 3;
+  int COMMAND_FEATURE_COUNT = 2;
 
   /**
    * The meta object id for the '{@link org.eclipse.xtext.example.fowlerdsl.statemachine.impl.StateImpl <em>State</em>}' class.
@@ -296,17 +278,6 @@ public interface StatemachinePackage extends EPackage
    * @generated
    */
   EClass getStatemachine();
-
-  /**
-   * Returns the meta object for the containment reference '{@link org.eclipse.xtext.example.fowlerdsl.statemachine.Statemachine#getImportSection <em>Import Section</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Import Section</em>'.
-   * @see org.eclipse.xtext.example.fowlerdsl.statemachine.Statemachine#getImportSection()
-   * @see #getStatemachine()
-   * @generated
-   */
-  EReference getStatemachine_ImportSection();
 
   /**
    * Returns the meta object for the containment reference list '{@link org.eclipse.xtext.example.fowlerdsl.statemachine.Statemachine#getEvents <em>Events</em>}'.
@@ -417,17 +388,6 @@ public interface StatemachinePackage extends EPackage
   EAttribute getCommand_Code();
 
   /**
-   * Returns the meta object for the containment reference '{@link org.eclipse.xtext.example.fowlerdsl.statemachine.Command#getBody <em>Body</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Body</em>'.
-   * @see org.eclipse.xtext.example.fowlerdsl.statemachine.Command#getBody()
-   * @see #getCommand()
-   * @generated
-   */
-  EReference getCommand_Body();
-
-  /**
    * Returns the meta object for class '{@link org.eclipse.xtext.example.fowlerdsl.statemachine.State <em>State</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -536,14 +496,6 @@ public interface StatemachinePackage extends EPackage
     EClass STATEMACHINE = eINSTANCE.getStatemachine();
 
     /**
-     * The meta object literal for the '<em><b>Import Section</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference STATEMACHINE__IMPORT_SECTION = eINSTANCE.getStatemachine_ImportSection();
-
-    /**
      * The meta object literal for the '<em><b>Events</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -626,14 +578,6 @@ public interface StatemachinePackage extends EPackage
      * @generated
      */
     EAttribute COMMAND__CODE = eINSTANCE.getCommand_Code();
-
-    /**
-     * The meta object literal for the '<em><b>Body</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference COMMAND__BODY = eINSTANCE.getCommand_Body();
 
     /**
      * The meta object literal for the '{@link org.eclipse.xtext.example.fowlerdsl.statemachine.impl.StateImpl <em>State</em>}' class.

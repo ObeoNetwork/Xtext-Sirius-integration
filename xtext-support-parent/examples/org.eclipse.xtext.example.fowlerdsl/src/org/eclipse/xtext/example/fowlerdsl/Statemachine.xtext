@@ -1,10 +1,9 @@
-grammar org.eclipse.xtext.example.fowlerdsl.Statemachine with org.eclipse.xtext.xbase.Xbase
+grammar org.eclipse.xtext.example.fowlerdsl.Statemachine with org.eclipse.xtext.common.Terminals
 
 generate statemachine "http://www.eclipse.org/xtext/example/fowlerdsl/Statemachine"
 
 Statemachine :
      {Statemachine}
-	importSection=XImportSection?
 	('events' 
 		events+=Event+ 
 	'end')?
@@ -23,7 +22,6 @@ Event:
 
 Command:
 	name=ID code=ID
-	(body=XBlockExpression)?
 ;
 
 
