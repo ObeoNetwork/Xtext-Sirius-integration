@@ -1,4 +1,4 @@
-package defaultpackage;
+package org.eclipse.sirius.example.fowlerdsl.design;
 
 import java.util.HashSet;
 import java.util.Set;

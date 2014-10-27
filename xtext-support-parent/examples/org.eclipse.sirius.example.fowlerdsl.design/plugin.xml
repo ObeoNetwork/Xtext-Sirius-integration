@@ -2,7 +2,7 @@
 <?eclipse version="3.0"?>
 <plugin>
   <extension point="org.eclipse.sirius.componentization">
-    <component class="defaultpackage.Activator"
+    <component class="org.eclipse.sirius.example.fowlerdsl.design.Activator"
                id="org.eclipse.sirius.example.fowlerdsl.design"
 	       name="fowlerdsl">
     </component>

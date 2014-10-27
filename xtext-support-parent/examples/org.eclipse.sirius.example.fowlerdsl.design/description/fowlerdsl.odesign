@@ -4,24 +4,24 @@
     <ownedRepresentations xsi:type="description_1:DiagramDescription" name="State Machine Diagram" domainClass="statemachine.Statemachine" enablePopupBars="true">
       <metamodel href="http://www.eclipse.org/xtext/example/fowlerdsl/Statemachine#/"/>
       <defaultLayer name="Default">
-        <edgeMappings name="Transitions" label="Transitions" sourceMapping="//@ownedViewpoints[name='Design']/@ownedRepresentations[name='State%20Machine%20Diagram']/@defaultLayer/@containerMappings[name='State']" targetMapping="//@ownedViewpoints[name='Design']/@ownedRepresentations[name='State%20Machine%20Diagram']/@defaultLayer/@containerMappings[name='State']" targetFinderExpression="feature:state" sourceFinderExpression="feature:eContainer" domainClass="statemachine.Transition" useDomainElement="true">
-          <style sizeComputationExpression="1" routingStyle="manhattan">
+        <edgeMappings name="Transitions" label="Transitions" doubleClickDescription="//@ownedViewpoints[name='Design']/@ownedRepresentations[name='State%20Machine%20Diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='NavigateToXtextEditor']" sourceMapping="//@ownedViewpoints[name='Design']/@ownedRepresentations[name='State%20Machine%20Diagram']/@defaultLayer/@containerMappings[name='State']" targetMapping="//@ownedViewpoints[name='Design']/@ownedRepresentations[name='State%20Machine%20Diagram']/@defaultLayer/@containerMappings[name='State']" targetFinderExpression="feature:state" sourceFinderExpression="feature:eContainer" domainClass="statemachine.Transition" useDomainElement="true">
+          <style sizeComputationExpression="1">
             <strokeColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='gray']"/>
-            <centerLabelStyleDescription>
+            <centerLabelStyleDescription showIcon="false" labelExpression="['[' + event.name + ']'/]">
               <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
             </centerLabelStyleDescription>
           </style>
           <conditionnalStyles predicateExpression="[event.oclIsUndefined()/]">
-            <style sizeComputationExpression="1" routingStyle="manhattan">
+            <style sizeComputationExpression="1">
               <strokeColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='red']"/>
-              <centerLabelStyleDescription>
-                <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <centerLabelStyleDescription showIcon="false" labelExpression="[??] no event !">
+                <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='red']"/>
               </centerLabelStyleDescription>
             </style>
           </conditionnalStyles>
         </edgeMappings>
         <containerMappings name="State" labelDirectEdit="//@ownedViewpoints[name='Design']/@ownedRepresentations[name='State%20Machine%20Diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='Edit%20name']" doubleClickDescription="//@ownedViewpoints[name='Design']/@ownedRepresentations[name='State%20Machine%20Diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='OpenEmbeddedEditor']" domainClass="statemachine.State" dropDescriptions="//@ownedViewpoints[name='Design']/@ownedRepresentations[name='State%20Machine%20Diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='DropCommandInState']" childrenPresentation="List">
-          <subNodeMappings name="CommandRef" semanticCandidatesExpression="feature:actions" domainClass="statemachine.Command">
+          <subNodeMappings name="CommandRef" semanticCandidatesExpression="feature:actions" doubleClickDescription="//@ownedViewpoints[name='Design']/@ownedRepresentations[name='State%20Machine%20Diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='NavigateToXtextEditor']" domainClass="statemachine.Command">
             <style xsi:type="style:BundledImageDescription" iconPath="/org.eclipse.sirius.example.fowlerdsl.design/icons/CallOperationAction.gif" labelAlignment="LEFT" resizeKind="NSEW">
               <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
               <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
@@ -44,7 +44,7 @@
           </conditionnalStyles>
         </containerMappings>
         <containerMappings name="CommandsContainer" semanticCandidatesExpression="var:self" domainClass="statemachine.Statemachine" childrenPresentation="List">
-          <subNodeMappings name="Command" semanticCandidatesExpression="feature:commands" domainClass="statemachine.Command">
+          <subNodeMappings name="Command" semanticCandidatesExpression="feature:commands" doubleClickDescription="//@ownedViewpoints[name='Design']/@ownedRepresentations[name='State%20Machine%20Diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='NavigateToXtextEditor']" domainClass="statemachine.Command">
             <style xsi:type="style:BundledImageDescription" labelFormat="italic" labelExpression="[self.name + ':' + self.code/]" iconPath="/org.eclipse.sirius.example.fowlerdsl.design/icons/Operation.gif" labelAlignment="LEFT" resizeKind="NSEW">
               <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
               <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
@@ -138,25 +138,56 @@
               </firstModelOperations>
             </initialOperation>
           </ownedTools>
+          <ownedTools xsi:type="tool:DoubleClickDescription" name="NavigateToXtextEditor" mappings="//@ownedViewpoints[name='Design']/@ownedRepresentations[name='State%20Machine%20Diagram']/@defaultLayer/@edgeMappings[name='Transitions'] //@ownedViewpoints[name='Design']/@ownedRepresentations[name='State%20Machine%20Diagram']/@additionalLayers[name='Events']/@edgeMappings[name='TransitionToEvent'] //@ownedViewpoints[name='Design']/@ownedRepresentations[name='State%20Machine%20Diagram']/@defaultLayer/@containerMappings[name='State']/@subNodeMappings[name='CommandRef'] //@ownedViewpoints[name='Design']/@ownedRepresentations[name='State%20Machine%20Diagram']/@defaultLayer/@containerMappings[name='CommandsContainer']/@subNodeMappings[name='Command'] //@ownedViewpoints[name='Design']/@ownedRepresentations[name='State%20Machine%20Diagram']/@additionalLayers[name='Events']/@nodeMappings[name='Event']">
+            <element name="element"/>
+            <elementView name="elementView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:element">
+                <subModelOperations xsi:type="tool_1:ChangeContext" browseExpression="service:openTextEditor"/>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
           <ownedTools xsi:type="tool:DoubleClickDescription" name="OpenEmbeddedEditor" mappings="//@ownedViewpoints[name='Design']/@ownedRepresentations[name='State%20Machine%20Diagram']/@defaultLayer/@containerMappings[name='State']">
             <element name="element"/>
             <elementView name="elementView"/>
             <initialOperation>
-              <firstModelOperations xsi:type="tool_1:ExternalJavaActionCall" name="org.eclipse.sirius.example.fowlerdsl.design.OpenEmbeddedEditor" action="//@ownedViewpoints[name='Design']/@ownedRepresentations[name='State%20Machine%20Diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='OpenEmbeddedXtextEditor']"/>
+              <firstModelOperations xsi:type="tool_1:ExternalJavaActionCall" name="org.eclipse.sirius.example.fowlerdsl.design.OpenEmbeddedEditor" action="//@ownedViewpoints[name='Design']/@ownedRepresentations[name='State%20Machine%20Diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='OpenEmbeddedXtextEditor']">
+                <subModelOperations xsi:type="tool_1:ChangeContext" browseExpression="[self.eContainer()/]">
+                  <subModelOperations xsi:type="tool:Navigation" createIfNotExistent="true" diagramDescription="//@ownedViewpoints[name='Design']/@ownedRepresentations[name='State%20Machine%20Diagram']"/>
+                </subModelOperations>
+              </firstModelOperations>
             </initialOperation>
           </ownedTools>
           <ownedTools xsi:type="tool_1:ExternalJavaAction" name="OpenEmbeddedXtextEditor" id="org.eclipse.sirius.example.fowlerdsl.design.OpenEmbeddedEditor"/>
+          <ownedTools xsi:type="tool:EdgeCreationDescription" name="Transition..." edgeMappings="//@ownedViewpoints[name='Design']/@ownedRepresentations[name='State%20Machine%20Diagram']/@defaultLayer/@edgeMappings[name='Transitions']" iconPath="/org.eclipse.sirius.example.fowlerdsl.design/icons/Association.gif">
+            <sourceVariable name="source">
+              <subVariables xsi:type="tool_1:SelectModelElementVariable" name="event" candidatesExpression="[self.eContainer(Statemachine).events/]" message="Select the event trigerring this transition"/>
+            </sourceVariable>
+            <targetVariable name="target"/>
+            <sourceViewVariable name="sourceView"/>
+            <targetViewVariable name="targetView"/>
+            <initialOperation>
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:source">
+                <subModelOperations xsi:type="tool_1:If" conditionExpression="[self.oclIsKindOf(State)/]">
+                  <subModelOperations xsi:type="tool_1:CreateInstance" typeName="statemachine.Transition" referenceName="transitions">
+                    <subModelOperations xsi:type="tool_1:SetValue" featureName="state" valueExpression="var:target"/>
+                    <subModelOperations xsi:type="tool_1:SetValue" featureName="event" valueExpression="var:event"/>
+                  </subModelOperations>
+                </subModelOperations>
+              </firstModelOperations>
+            </initialOperation>
+          </ownedTools>
         </toolSections>
       </defaultLayer>
       <additionalLayers name="Events">
-        <nodeMappings name="Event" labelDirectEdit="//@ownedViewpoints[name='Design']/@ownedRepresentations[name='State%20Machine%20Diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='Edit%20name']" domainClass="statemachine.Event">
+        <nodeMappings name="Event" labelDirectEdit="//@ownedViewpoints[name='Design']/@ownedRepresentations[name='State%20Machine%20Diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='Edit%20name']" semanticCandidatesExpression="feature:events" doubleClickDescription="//@ownedViewpoints[name='Design']/@ownedRepresentations[name='State%20Machine%20Diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='NavigateToXtextEditor']" domainClass="statemachine.Event">
           <style xsi:type="style:BundledImageDescription" labelFormat="bold" iconPath="/org.eclipse.sirius.example.fowlerdsl.design/icons/SignalEvent.gif" resizeKind="NSEW" shape="triangle">
             <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
             <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
             <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_green']"/>
           </style>
         </nodeMappings>
-        <edgeMappings name="TransitionToEvent" sourceMapping="//@ownedViewpoints[name='Design']/@ownedRepresentations[name='State%20Machine%20Diagram']/@defaultLayer/@edgeMappings[name='Transitions']" targetMapping="//@ownedViewpoints[name='Design']/@ownedRepresentations[name='State%20Machine%20Diagram']/@additionalLayers[name='Events']/@nodeMappings[name='Event']" targetFinderExpression="feature:event">
+        <edgeMappings name="TransitionToEvent" doubleClickDescription="//@ownedViewpoints[name='Design']/@ownedRepresentations[name='State%20Machine%20Diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='NavigateToXtextEditor']" sourceMapping="//@ownedViewpoints[name='Design']/@ownedRepresentations[name='State%20Machine%20Diagram']/@defaultLayer/@edgeMappings[name='Transitions']" targetMapping="//@ownedViewpoints[name='Design']/@ownedRepresentations[name='State%20Machine%20Diagram']/@additionalLayers[name='Events']/@nodeMappings[name='Event']" targetFinderExpression="feature:event">
           <style lineStyle="dash" sourceArrow="InputArrow" targetArrow="NoDecoration" sizeComputationExpression="1">
             <strokeColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='gray']"/>
             <centerLabelStyleDescription>
@@ -177,5 +208,6 @@
         </toolSections>
       </additionalLayers>
     </ownedRepresentations>
+    <ownedJavaExtensions qualifiedClassName="org.eclipse.sirius.example.fowlerdsl.design.service.StatemachineServices"/>
   </ownedViewpoints>
 </description:Group>
