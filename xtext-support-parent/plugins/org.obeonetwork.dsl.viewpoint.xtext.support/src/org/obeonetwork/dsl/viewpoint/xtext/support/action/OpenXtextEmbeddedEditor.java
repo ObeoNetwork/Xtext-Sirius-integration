@@ -16,9 +16,11 @@ import java.util.Map;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gef.EditPart;
+import org.eclipse.gmf.runtime.diagram.ui.editparts.ConnectionEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.DiagramEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.IGraphicalEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
+import org.eclipse.gmf.runtime.notation.Edge;
 import org.eclipse.sirius.tools.api.ui.IExternalJavaAction;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbench;
@@ -45,10 +47,37 @@ public abstract class OpenXtextEmbeddedEditor implements IExternalJavaAction {
 				openEmbeddedEditor((IGraphicalEditPart) editPart);
 				break;
 			}
+			else {
+				ConnectionEditPart cep = findConnectionEditPart(diagramEditPart, o);
+				if (cep != null) {
+					openEmbeddedEditor(cep);
+					break;
+				}
+			}
 		}
 
 	}
 	
+    /** Finds an connection editpart given a starting editpart and an EObject */
+	private ConnectionEditPart findConnectionEditPart(DiagramEditPart diagramEditPart, EObject theElement) {
+		for (Object obj : diagramEditPart.getChildren()) {
+			if (obj instanceof IGraphicalEditPart) {
+				IGraphicalEditPart ep = (IGraphicalEditPart) obj;
+				// Only consider source connections
+				for (Object o : ep.getSourceConnections())
+				{
+					if (o instanceof ConnectionEditPart) {
+						ConnectionEditPart cep = (ConnectionEditPart) o;
+						if (((Edge)cep.getModel()).getElement().equals(theElement)) {
+							return cep;
+						}
+					}
+				}
+			}
+		}
+		return null;
+	}
+
 	protected  void openEmbeddedEditor(IGraphicalEditPart graphicalEditPart) {
 			XtextEmbeddedEditor embeddedEditor = new XtextEmbeddedEditor(graphicalEditPart, getInjector());
 			embeddedEditor.showEditor();	
