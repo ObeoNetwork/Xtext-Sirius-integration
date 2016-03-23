@@ -7,10 +7,10 @@ This is not needed at all to load Xtext models and create diagrams on top of tho
 
 ### Features
 
-![Screenshot of diagram without embedded text editor](http://github.com/ObeoNetwork/Xtext-Sirius-integration/raw/master/screenshot-diagram+text.png "Screenshot without the text editor")
+![Screenshot of diagram without embedded text editor](screenshot-diagram+text.png "Screenshot without the text editor")
 
 
-![Screenshot of diagram with embedded text editor](http://github.com/ObeoNetwork/Xtext-Sirius-integration/raw/master/screenshot-diagram.png "Screenshot with the text editor")
+![Screenshot of diagram with embedded text editor](screenshot-diagram.png "Screenshot with the text editor")
 
 
 
