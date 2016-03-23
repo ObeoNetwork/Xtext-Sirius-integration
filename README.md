@@ -1,9 +1,11 @@
-Xtext Sirius integration plug-in
------------------------------------
+Xtext Sirius Embedded Editor Example
+------------------------------------
+
+This plug-in contains a basic framework easing the embedding of an Xtext editor inside a diagram representation created with Sirius.  
+This is not needed at all to load Xtext models and create diagrams on top of those, this functionnaliy is provided by the Sirius project itself in its update-site.
+
 
 ### Features
-
-This plug-in provides support to integrate an Xtext editor inside a diagram representation created with Sirius.  
 
 ![Screenshot of diagram without embedded text editor](http://github.com/ObeoNetwork/Xtext-viewpoint-integration/raw/master/screenshot-diagram+text.png "Screenshot without the text editor")
 
