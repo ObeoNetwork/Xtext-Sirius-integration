@@ -170,6 +170,7 @@ public class XtextEmbeddedEditor {
 			}
 			// xtextEditor.dispose();
 			if (xtextEditorComposite != null) {
+				this.xtextEditorComposite.setVisible(false);
 				this.xtextEditorComposite.dispose();
 				xtextEditorComposite = null;
 			}
