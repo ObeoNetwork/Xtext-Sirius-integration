@@ -5,14 +5,14 @@
       <metamodel href="http://www.eclipse.org/xtext/example/fowlerdsl/Statemachine#/"/>
       <defaultLayer name="Default">
         <edgeMappings name="Transitions" label="Transitions" semanticCandidatesExpression="feature:eAllContents" doubleClickDescription="//@ownedViewpoints[name='Design']/@ownedRepresentations[name='State%20Machine%20Diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='NavigateToXtextEditor']" sourceMapping="//@ownedViewpoints[name='Design']/@ownedRepresentations[name='State%20Machine%20Diagram']/@defaultLayer/@containerMappings[name='State']" targetMapping="//@ownedViewpoints[name='Design']/@ownedRepresentations[name='State%20Machine%20Diagram']/@defaultLayer/@containerMappings[name='State']" targetFinderExpression="feature:state" sourceFinderExpression="feature:eContainer" domainClass="statemachine.Transition" useDomainElement="true">
-          <style>
-            <strokeColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='gray']"/>
+          <style targetArrow="InputFillClosedArrow" routingStyle="manhattan">
+            <strokeColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
             <centerLabelStyleDescription showIcon="false" labelExpression="aql:'[' + self.event.name + ']'">
               <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
             </centerLabelStyleDescription>
           </style>
           <conditionnalStyles predicateExpression="aql:self.event = null">
-            <style>
+            <style targetArrow="InputFillClosedArrow" routingStyle="manhattan">
               <strokeColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='red']"/>
               <centerLabelStyleDescription showIcon="false" labelExpression="[??] no event !">
                 <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='red']"/>
@@ -28,24 +28,22 @@
               <color xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
             </style>
           </subNodeMappings>
-          <style xsi:type="style:FlatContainerStyleDescription" arcWidth="6" arcHeight="6" borderSizeComputationExpression="1" showIcon="false" iconPath="/org.eclipse.sirius.example.fowlerdsl.design/icons/State.gif" roundedCorner="true" widthComputationExpression="8" heightComputationExpression="6" backgroundStyle="Liquid">
+          <style xsi:type="style:FlatContainerStyleDescription" arcWidth="12" arcHeight="12" borderSizeComputationExpression="1" showIcon="false" iconPath="/org.eclipse.sirius.example.fowlerdsl.design/icons/State.gif" roundedCorner="true" widthComputationExpression="12" heightComputationExpression="9" backgroundStyle="GradientTopToBottom" foregroundColor="//@userColorsPalettes[name='statemachinepalette']/@entries[name='stateblue']">
             <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='dark_blue']"/>
             <labelFormat>bold</labelFormat>
             <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='dark_gray']"/>
             <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
-            <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_gray']"/>
           </style>
           <conditionnalStyles predicateExpression="aql:self.transitions->size() = 0 and self.eInverse()->filter(statemachine::Transition)->size() = 0">
-            <style xsi:type="style:FlatContainerStyleDescription" arcWidth="6" arcHeight="6" borderSizeComputationExpression="1" showIcon="false" iconPath="/org.eclipse.sirius.example.fowlerdsl.design/icons/State.gif" roundedCorner="true" widthComputationExpression="8" heightComputationExpression="6" backgroundStyle="Liquid">
+            <style xsi:type="style:FlatContainerStyleDescription" arcWidth="12" arcHeight="12" borderSizeComputationExpression="1" showIcon="false" iconPath="/org.eclipse.sirius.example.fowlerdsl.design/icons/State.gif" roundedCorner="true" widthComputationExpression="12" heightComputationExpression="9" backgroundStyle="GradientTopToBottom" foregroundColor="//@userColorsPalettes[name='statemachinepalette']/@entries[name='stateblue']">
               <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_gray']"/>
               <labelFormat>bold</labelFormat>
               <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='gray']"/>
               <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
-              <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_gray']"/>
             </style>
           </conditionnalStyles>
           <conditionnalStyles predicateExpression="aql:self.name = null or self.name.size() = 0">
-            <style xsi:type="style:FlatContainerStyleDescription" arcWidth="6" arcHeight="6" borderSizeComputationExpression="1" showIcon="false" iconPath="/org.eclipse.sirius.example.fowlerdsl.design/icons/State.gif" roundedCorner="true" widthComputationExpression="8" heightComputationExpression="6" backgroundStyle="Liquid">
+            <style xsi:type="style:FlatContainerStyleDescription" arcWidth="12" arcHeight="12" borderSizeComputationExpression="1" showIcon="false" iconPath="/org.eclipse.sirius.example.fowlerdsl.design/icons/State.gif" roundedCorner="true" widthComputationExpression="12" heightComputationExpression="9" backgroundStyle="GradientTopToBottom">
               <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='red']"/>
               <labelFormat>bold</labelFormat>
               <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
@@ -236,4 +234,7 @@
     </ownedRepresentations>
     <ownedJavaExtensions qualifiedClassName="org.eclipse.sirius.example.fowlerdsl.design.service.StatemachineServices"/>
   </ownedViewpoints>
+  <userColorsPalettes name="statemachinepalette">
+    <entries xsi:type="description:UserFixedColor" red="205" green="220" blue="243" name="stateblue"/>
+  </userColorsPalettes>
 </description:Group>
