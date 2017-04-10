@@ -7,11 +7,11 @@
         <edgeMappings name="Transitions" label="Transitions" semanticCandidatesExpression="feature:eAllContents" doubleClickDescription="//@ownedViewpoints[name='Design']/@ownedRepresentations[name='State%20Machine%20Diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='NavigateToXtextEditor']" sourceMapping="//@ownedViewpoints[name='Design']/@ownedRepresentations[name='State%20Machine%20Diagram']/@defaultLayer/@containerMappings[name='State']" targetMapping="//@ownedViewpoints[name='Design']/@ownedRepresentations[name='State%20Machine%20Diagram']/@defaultLayer/@containerMappings[name='State']" targetFinderExpression="feature:state" sourceFinderExpression="feature:eContainer" domainClass="statemachine.Transition" useDomainElement="true">
           <style>
             <strokeColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='gray']"/>
-            <centerLabelStyleDescription showIcon="false" labelExpression="['[' + event.name + ']'/]">
+            <centerLabelStyleDescription showIcon="false" labelExpression="aql:'[' + self.event.name + ']'">
               <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
             </centerLabelStyleDescription>
           </style>
-          <conditionnalStyles predicateExpression="[event.oclIsUndefined()/]">
+          <conditionnalStyles predicateExpression="aql:self.event = null">
             <style>
               <strokeColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='red']"/>
               <centerLabelStyleDescription showIcon="false" labelExpression="[??] no event !">
@@ -35,7 +35,7 @@
             <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
             <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_gray']"/>
           </style>
-          <conditionnalStyles predicateExpression="[transitions->size() = 0 and eInverse()->filter(Transition)->size() = 0/]">
+          <conditionnalStyles predicateExpression="aql:self.transitions->size() = 0 and self.eInverse()->filter(statemachine::Transition)->size() = 0">
             <style xsi:type="style:FlatContainerStyleDescription" arcWidth="6" arcHeight="6" borderSizeComputationExpression="1" showIcon="false" iconPath="/org.eclipse.sirius.example.fowlerdsl.design/icons/State.gif" roundedCorner="true" widthComputationExpression="8" heightComputationExpression="6" backgroundStyle="Liquid">
               <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_gray']"/>
               <labelFormat>bold</labelFormat>
@@ -47,7 +47,7 @@
         </containerMappings>
         <containerMappings name="CommandsContainer" semanticCandidatesExpression="var:self" domainClass="statemachine.Statemachine" childrenPresentation="List">
           <subNodeMappings name="Command" semanticCandidatesExpression="feature:commands" doubleClickDescription="//@ownedViewpoints[name='Design']/@ownedRepresentations[name='State%20Machine%20Diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='NavigateToXtextEditor']" domainClass="statemachine.Command">
-            <style xsi:type="style:BundledImageDescription" labelExpression="[self.name + ':' + self.code/]" iconPath="/org.eclipse.sirius.example.fowlerdsl.design/icons/Operation.gif" labelAlignment="LEFT" resizeKind="NSEW">
+            <style xsi:type="style:BundledImageDescription" labelExpression="aql:self.name + ':' + self.code" iconPath="/org.eclipse.sirius.example.fowlerdsl.design/icons/Operation.gif" labelAlignment="LEFT" resizeKind="NSEW">
               <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
               <labelFormat>italic</labelFormat>
               <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
@@ -67,7 +67,7 @@
             <viewVariable name="containerView"/>
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:CreateInstance" typeName="statemachine.State" referenceName="states">
-                <subModelOperations xsi:type="tool_1:SetValue" featureName="name" valueExpression="['newState' + eContents()->filter(State)->size()/]"/>
+                <subModelOperations xsi:type="tool_1:SetValue" featureName="name" valueExpression="aql:'newState' + self.eContents()->filter(statemachine::State)->size()"/>
               </firstModelOperations>
             </initialOperation>
           </ownedTools>
@@ -83,16 +83,16 @@
             <sourceViewVariable name="sourceView"/>
             <targetViewVariable name="targetView"/>
             <initialOperation>
-              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:source">
-                <subModelOperations xsi:type="tool_1:If" conditionExpression="[self.oclIsKindOf(State)/]">
+              <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="aql:source">
+                <subModelOperations xsi:type="tool_1:If" conditionExpression="aql:self.oclIsKindOf(statemachine::State)">
                   <subModelOperations xsi:type="tool_1:CreateInstance" typeName="statemachine.Transition" referenceName="transitions">
                     <subModelOperations xsi:type="tool_1:SetValue" featureName="state" valueExpression="var:target"/>
                   </subModelOperations>
                 </subModelOperations>
-                <subModelOperations xsi:type="tool_1:If" conditionExpression="[self.oclIsKindOf(Transition)/]">
+                <subModelOperations xsi:type="tool_1:If" conditionExpression="aql:self.oclIsKindOf(statemachine::Transition)">
                   <subModelOperations xsi:type="tool_1:SetValue" featureName="event" valueExpression="var:target"/>
                 </subModelOperations>
-                <subModelOperations xsi:type="tool_1:If" conditionExpression="[self.oclIsKindOf(Event)/]">
+                <subModelOperations xsi:type="tool_1:If" conditionExpression="aql:self.oclIsKindOf(statemachine::Event)">
                   <subModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:target">
                     <subModelOperations xsi:type="tool_1:SetValue" featureName="event" valueExpression="var:source"/>
                   </subModelOperations>
@@ -128,12 +128,12 @@
             <newViewContainer name="newContainerView"/>
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:newSemanticContainer">
-                <subModelOperations xsi:type="tool_1:If" conditionExpression="[newSemanticContainer.oclIsKindOf(State)/]">
+                <subModelOperations xsi:type="tool_1:If" conditionExpression="aql:newSemanticContainer.oclIsKindOf(statemachine::State)">
                   <subModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:newSemanticContainer">
                     <subModelOperations xsi:type="tool_1:SetValue" featureName="actions" valueExpression="var:element"/>
                   </subModelOperations>
                 </subModelOperations>
-                <subModelOperations xsi:type="tool_1:If" conditionExpression="[oldSemanticContainer.oclIsKindOf(State)/]">
+                <subModelOperations xsi:type="tool_1:If" conditionExpression="aql:oldSemanticContainer.oclIsKindOf(statemachine::State)">
                   <subModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:oldSemanticContainer">
                     <subModelOperations xsi:type="tool_1:Unset" featureName="actions" elementExpression="var:element"/>
                   </subModelOperations>
@@ -146,7 +146,7 @@
             <elementView name="elementView"/>
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:element">
-                <subModelOperations xsi:type="tool_1:ChangeContext" browseExpression="service:openTextEditor"/>
+                <subModelOperations xsi:type="tool_1:ChangeContext" browseExpression="aql:self.openTextEditor()"/>
               </firstModelOperations>
             </initialOperation>
           </ownedTools>
@@ -155,7 +155,7 @@
             <elementView name="elementView"/>
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ExternalJavaActionCall" name="org.eclipse.sirius.example.fowlerdsl.design.OpenEmbeddedEditor" action="//@ownedViewpoints[name='Design']/@ownedRepresentations[name='State%20Machine%20Diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='OpenEmbeddedXtextEditor']">
-                <subModelOperations xsi:type="tool_1:ChangeContext" browseExpression="[self.eContainer()/]">
+                <subModelOperations xsi:type="tool_1:ChangeContext" browseExpression="aql:self.eContainer()">
                   <subModelOperations xsi:type="tool:Navigation" createIfNotExistent="true" diagramDescription="//@ownedViewpoints[name='Design']/@ownedRepresentations[name='State%20Machine%20Diagram']"/>
                 </subModelOperations>
               </firstModelOperations>
@@ -171,7 +171,7 @@
             <targetViewVariable name="targetView"/>
             <initialOperation>
               <firstModelOperations xsi:type="tool_1:ChangeContext" browseExpression="var:source">
-                <subModelOperations xsi:type="tool_1:If" conditionExpression="[self.oclIsKindOf(State)/]">
+                <subModelOperations xsi:type="tool_1:If" conditionExpression="aql:self.oclIsKindOf(statemachine::State)">
                   <subModelOperations xsi:type="tool_1:CreateInstance" typeName="statemachine.Transition" referenceName="transitions">
                     <subModelOperations xsi:type="tool_1:SetValue" featureName="state" valueExpression="var:target"/>
                     <subModelOperations xsi:type="tool_1:SetValue" featureName="event" valueExpression="var:event"/>
