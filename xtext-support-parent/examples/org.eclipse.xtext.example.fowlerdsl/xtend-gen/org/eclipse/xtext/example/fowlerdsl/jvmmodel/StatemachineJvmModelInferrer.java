@@ -2,9 +2,7 @@ package org.eclipse.xtext.example.fowlerdsl.jvmmodel;
 
 import com.google.inject.Inject;
 import java.util.Arrays;
-import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.xtext.example.fowlerdsl.statemachine.Statemachine;
 import org.eclipse.xtext.xbase.jvmmodel.AbstractModelInferrer;
 import org.eclipse.xtext.xbase.jvmmodel.IJvmDeclaredTypeAcceptor;
@@ -57,11 +55,8 @@ public class StatemachineJvmModelInferrer extends AbstractModelInferrer {
   public String className(final Statemachine statemachine) {
     String _xblockexpression = null;
     {
-      Resource _eResource = statemachine.eResource();
-      URI _uRI = _eResource.getURI();
-      final String lastSegment = _uRI.lastSegment();
-      int _indexOf = lastSegment.indexOf(".");
-      _xblockexpression = lastSegment.substring(0, _indexOf);
+      final String lastSegment = statemachine.eResource().getURI().lastSegment();
+      _xblockexpression = lastSegment.substring(0, lastSegment.indexOf("."));
     }
     return _xblockexpression;
   }

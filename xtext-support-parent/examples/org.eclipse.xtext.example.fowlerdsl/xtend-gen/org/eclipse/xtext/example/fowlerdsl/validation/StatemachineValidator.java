@@ -18,13 +18,10 @@ public class StatemachineValidator extends AbstractStatemachineValidator {
   
   @Check
   public void checkStateStartsWithCapital(final org.eclipse.xtext.example.fowlerdsl.statemachine.State state) {
-    String _name = state.getName();
-    char _charAt = _name.charAt(0);
-    boolean _isUpperCase = Character.isUpperCase(_charAt);
+    boolean _isUpperCase = Character.isUpperCase(state.getName().charAt(0));
     if (_isUpperCase) {
-      String _name_1 = state.getName();
       this.warning("Name should start with an lower case letter", StatemachinePackage.Literals.STATE__NAME, 
-        StatemachineValidator.INVALID_NAME, _name_1);
+        StatemachineValidator.INVALID_NAME, state.getName());
     }
   }
 }

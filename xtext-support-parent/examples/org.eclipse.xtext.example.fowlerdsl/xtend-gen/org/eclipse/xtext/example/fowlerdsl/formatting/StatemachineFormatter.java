@@ -5,7 +5,6 @@ package org.eclipse.xtext.example.fowlerdsl.formatting;
 
 import com.google.inject.Inject;
 import java.util.List;
-import org.eclipse.xtext.Assignment;
 import org.eclipse.xtext.Keyword;
 import org.eclipse.xtext.example.fowlerdsl.services.StatemachineGrammarAccess;
 import org.eclipse.xtext.formatting.impl.AbstractDeclarativeFormatter;
@@ -27,54 +26,37 @@ public class StatemachineFormatter extends AbstractDeclarativeFormatter {
   @Extension
   private StatemachineGrammarAccess _statemachineGrammarAccess;
   
+  @Override
   protected void configureFormatting(final FormattingConfig c) {
     List<Pair<Keyword, Keyword>> _findKeywordPairs = this._statemachineGrammarAccess.findKeywordPairs("{", "}");
     for (final Pair<Keyword, Keyword> pair : _findKeywordPairs) {
       {
-        FormattingConfig.IndentationLocatorStart _setIndentationIncrement = c.setIndentationIncrement();
-        Keyword _first = pair.getFirst();
-        _setIndentationIncrement.after(_first);
-        FormattingConfig.IndentationLocatorEnd _setIndentationDecrement = c.setIndentationDecrement();
-        Keyword _second = pair.getSecond();
-        _setIndentationDecrement.before(_second);
-        FormattingConfig.LinewrapLocator _setLinewrap = c.setLinewrap(1, 1, 2);
-        Keyword _first_1 = pair.getFirst();
-        _setLinewrap.after(_first_1);
-        FormattingConfig.LinewrapLocator _setLinewrap_1 = c.setLinewrap(1, 1, 2);
-        Keyword _second_1 = pair.getSecond();
-        _setLinewrap_1.before(_second_1);
-        FormattingConfig.LinewrapLocator _setLinewrap_2 = c.setLinewrap(1, 2, 2);
-        Keyword _second_2 = pair.getSecond();
-        _setLinewrap_2.after(_second_2);
+        c.setIndentationIncrement().after(pair.getFirst());
+        c.setIndentationDecrement().before(pair.getSecond());
+        c.setLinewrap(1, 1, 2).after(pair.getFirst());
+        c.setLinewrap(1, 1, 2).before(pair.getSecond());
+        c.setLinewrap(1, 2, 2).after(pair.getSecond());
       }
     }
     List<Keyword> _findKeywords = this._statemachineGrammarAccess.findKeywords("events", "commands", "services", "state");
     for (final Keyword start : _findKeywords) {
       {
-        FormattingConfig.LinewrapLocator _setLinewrap = c.setLinewrap(2, 2, 2);
-        _setLinewrap.before(start);
-        FormattingConfig.IndentationLocatorStart _setIndentationIncrement = c.setIndentationIncrement();
-        _setIndentationIncrement.after(start);
+        c.setLinewrap(2, 2, 2).before(start);
+        c.setIndentationIncrement().after(start);
       }
     }
     List<Keyword> _findKeywords_1 = this._statemachineGrammarAccess.findKeywords("actions");
     for (final Keyword start_1 : _findKeywords_1) {
-      FormattingConfig.LinewrapLocator _setLinewrap = c.setLinewrap(1, 1, 2);
-      _setLinewrap.before(start_1);
+      c.setLinewrap(1, 1, 2).before(start_1);
     }
     List<Keyword> _findKeywords_2 = this._statemachineGrammarAccess.findKeywords("end", "do");
     for (final Keyword end : _findKeywords_2) {
-      FormattingConfig.LinewrapLocator _setLinewrap_1 = c.setLinewrap(1, 1, 2);
-      _setLinewrap_1.before(end);
+      c.setLinewrap(1, 1, 2).before(end);
     }
     List<Keyword> _findKeywords_3 = this._statemachineGrammarAccess.findKeywords("end");
     for (final Keyword end_1 : _findKeywords_3) {
-      FormattingConfig.IndentationLocatorEnd _setIndentationDecrement = c.setIndentationDecrement();
-      _setIndentationDecrement.before(end_1);
+      c.setIndentationDecrement().before(end_1);
     }
-    FormattingConfig.LinewrapLocator _setLinewrap_2 = c.setLinewrap(1, 1, 2);
-    StatemachineGrammarAccess.TransitionElements _transitionAccess = this._statemachineGrammarAccess.getTransitionAccess();
-    Assignment _eventAssignment_0 = _transitionAccess.getEventAssignment_0();
-    _setLinewrap_2.before(_eventAssignment_0);
+    c.setLinewrap(1, 1, 2).before(this._statemachineGrammarAccess.getTransitionAccess().getEventAssignment_0());
   }
 }
