@@ -44,6 +44,15 @@
               <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_gray']"/>
             </style>
           </conditionnalStyles>
+          <conditionnalStyles predicateExpression="aql:self.name = null or self.name.size() = 0">
+            <style xsi:type="style:FlatContainerStyleDescription" arcWidth="6" arcHeight="6" borderSizeComputationExpression="1" showIcon="false" iconPath="/org.eclipse.sirius.example.fowlerdsl.design/icons/State.gif" roundedCorner="true" widthComputationExpression="8" heightComputationExpression="6" backgroundStyle="Liquid">
+              <borderColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='red']"/>
+              <labelFormat>bold</labelFormat>
+              <labelColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='black']"/>
+              <backgroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='white']"/>
+              <foregroundColor xsi:type="description:SystemColor" href="environment:/viewpoint#//@systemColors/@entries[name='light_red']"/>
+            </style>
+          </conditionnalStyles>
         </containerMappings>
         <containerMappings name="CommandsContainer" semanticCandidatesExpression="var:self" domainClass="statemachine.Statemachine" childrenPresentation="List">
           <subNodeMappings name="Command" semanticCandidatesExpression="feature:commands" doubleClickDescription="//@ownedViewpoints[name='Design']/@ownedRepresentations[name='State%20Machine%20Diagram']/@defaultLayer/@toolSections.0/@ownedTools[name='NavigateToXtextEditor']" domainClass="statemachine.Command">
