@@ -9,17 +9,18 @@ import org.eclipse.xtext.validation.Check
 /**
  * Custom validation rules. 
  *
- * see http://www.eclipse.org/Xtext/documentation.html#validation
+ * See https://www.eclipse.org/Xtext/documentation/303_runtime_concepts.html#validation
  */
 class StatemachineValidator extends AbstractStatemachineValidator {
 
   	public static val INVALID_NAME = 'invalidName'
 
 	@Check
-	def checkStateStartsWithCapital(org.eclipse.xtext.example.fowlerdsl.statemachine.State state) {
+	def checkStateNameStartsWithLowerCase(org.eclipse.xtext.example.fowlerdsl.statemachine.State state) {
 		if (Character.isUpperCase(state.name.charAt(0))) {
-			warning('Name should start with an lower case letter', StatemachinePackage.Literals.STATE__NAME,
-				INVALID_NAME, state.name)
+			warning('Name should start with a lower case letter', 
+					StatemachinePackage.Literals.STATE__NAME,
+					INVALID_NAME, state.name)
 		}
 	}
 }

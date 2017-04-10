@@ -3,63 +3,28 @@
  */
 package org.eclipse.xtext.example.fowlerdsl.formatting
 
-import com.google.inject.Inject
-import org.eclipse.xtext.example.fowlerdsl.services.StatemachineGrammarAccess
 import org.eclipse.xtext.formatting.impl.AbstractDeclarativeFormatter
 import org.eclipse.xtext.formatting.impl.FormattingConfig
-import org.eclipse.xtext.xbase.formatting.XbaseFormatter2
-import org.eclipse.xtext.xbase.formatting.XbaseFormatter
-
 // import com.google.inject.Inject;
 // import org.eclipse.xtext.example.fowlerdsl.services.StatemachineGrammarAccess
+
 /**
  * This class contains custom formatting description.
  * 
- * see : http://www.eclipse.org/Xtext/documentation.html#formatting
- * on how and when to use it 
+ * See https://www.eclipse.org/Xtext/documentation/303_runtime_concepts.html#formatting
+ * on how and when to use it.
  * 
  * Also see {@link org.eclipse.xtext.xtext.XtextFormattingTokenSerializer} as an example
  */
 class StatemachineFormatter extends AbstractDeclarativeFormatter {
 
-	@Inject extension StatemachineGrammarAccess
-
+//	@Inject extension StatemachineGrammarAccess
+	
 	override protected void configureFormatting(FormattingConfig c) {
-
-		for (pair : findKeywordPairs("{", "}")) {
-			c.setIndentationIncrement.after(pair.first)
-			c.setIndentationDecrement.before(pair.second)
-			c.setLinewrap(1, 1, 2).after(pair.first);
-			c.setLinewrap(1, 1, 2).before(pair.second);
-			c.setLinewrap(1, 2, 2).after(pair.second);
-		}
-		for (start : findKeywords("events", "commands", "services", "state")) {
-			c.setLinewrap(2, 2, 2).before(start);
-			c.setIndentationIncrement.after(start)
-		}
-		for (start : findKeywords("actions")) {
-			c.setLinewrap(1, 1, 2).before(start);
-		}
-		for (end : findKeywords("end", "do")) {
-			c.setLinewrap(1, 1, 2).before(end);
-		}
-		for (end : findKeywords("end")) {
-			c.setIndentationDecrement().before(end)
-		}
-//		c.setNoSpace.between(stateAccess.doKeyword_2_0,stateAccess.actionXBlockExpressionParserRuleCall_2_1_0);
-		c.setLinewrap(1, 1, 2).before(transitionAccess.eventAssignment_0)
-//		c.setLinewrap(1, 1, 2).before(stateAccess.actionsAssignment_3_2)
-//		c.setLinewrap(1, 1, 2).before(statemachineAccess.servicesKeyword_4_0)
-//		c.setLinewrap(1, 1, 2).before(statemachineAccess.commandsKeyword_3_0)
-//		c.setLinewrap(1, 1, 2).before(statemachineAccess.commandsAssignment_3_1)
-//		c.setLinewrap(1, 1, 2).before(statemachineAccess.servicesAssignment_4_1)
-//		c.setLinewrap(1, 1, 2).before(statemachineAccess.eventsAssignment_1_1)
-
-	//		
-	// It's usually a good idea to activate the following three statements. 
-	// They will add and preserve newlines around comments
-	//		c.setLinewrap(0, 1, 2).before(SL_COMMENTRule)
-	//		c.setLinewrap(0, 1, 2).before(ML_COMMENTRule)
-	//		c.setLinewrap(0, 1, 1).after(ML_COMMENTRule)
+// It's usually a good idea to activate the following three statements.
+// They will add and preserve newlines around comments
+//		c.setLinewrap(0, 1, 2).before(SL_COMMENTRule)
+//		c.setLinewrap(0, 1, 2).before(ML_COMMENTRule)
+//		c.setLinewrap(0, 1, 1).after(ML_COMMENTRule)
 	}
 }

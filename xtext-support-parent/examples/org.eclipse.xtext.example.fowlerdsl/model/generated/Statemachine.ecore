@@ -4,13 +4,13 @@
     nsPrefix="statemachine">
   <eClassifiers xsi:type="ecore:EClass" name="Statemachine">
     <eStructuralFeatures xsi:type="ecore:EReference" name="events" upperBound="-1"
-        eType="#//Event" containment="true" eKeys="#//Event/code"/>
+        eType="#//Event" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="resetEvents" unique="false"
-        upperBound="-1" eType="#//Event" eKeys="#//Event/code"/>
+        upperBound="-1" eType="#//Event"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="commands" upperBound="-1"
-        eType="#//Command" containment="true" eKeys="#//Command/code"/>
+        eType="#//Command" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="states" upperBound="-1"
-        eType="#//State" containment="true" eKeys="#//State/name"/>
+        eType="#//State" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Event">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>

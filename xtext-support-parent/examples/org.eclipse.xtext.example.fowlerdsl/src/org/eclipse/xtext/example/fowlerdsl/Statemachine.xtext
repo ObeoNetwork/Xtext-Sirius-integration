@@ -12,7 +12,7 @@ Statemachine :
 	'end')?
 	('commands' 
 		commands+=Command+ 
-	'end')?	
+	'end')?
 	states+=State*
 ;
 
@@ -24,9 +24,8 @@ Command:
 	name=ID code=ID
 ;
 
-
 State:
-	'state' name=ID		
+	'state' name=ID
 		('actions' '{' actions+=[Command]+ '}')?
 		transitions+=Transition*
 	'end'

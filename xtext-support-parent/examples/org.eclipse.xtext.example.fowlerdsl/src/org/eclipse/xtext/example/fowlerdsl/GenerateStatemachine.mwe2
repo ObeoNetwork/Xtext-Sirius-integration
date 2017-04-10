@@ -10,6 +10,7 @@ var projectName = "org.eclipse.xtext.example.fowlerdsl"
 var runtimeProject = "../${projectName}"
 var generateXtendStub = true
 var encoding = "UTF-8"
+var lineDelimiter = '\n'
 
 Workflow {
     bean = StandaloneSetup {
@@ -36,7 +37,7 @@ Workflow {
 //    	directory = "${runtimeProject}.tests/src-gen"
 //    }
     
-    component = Generator {
+    component = Generator auto-inject {
     	pathRtProject = runtimeProject
     	pathUiProject = "${runtimeProject}.ui"
 //    	pathTestProject = "${runtimeProject}.tests"
@@ -105,7 +106,9 @@ Workflow {
     		fragment = contentAssist.ContentAssistFragment auto-inject {}
     
     		// generates a more lightweight Antlr parser and lexer tailored for content assist
-    		fragment = parser.antlr.XtextAntlrUiGeneratorFragment auto-inject {}
+    		fragment = parser.antlr.XtextAntlrUiGeneratorFragment auto-inject {
+    			partialParsing = true
+    		}
     
     		// generates junit test support classes into Generator#pathTestProject
 //    		fragment = junit.Junit4Fragment auto-inject {}
@@ -114,11 +117,10 @@ Workflow {
     		fragment = refactoring.RefactorElementNameFragment auto-inject {}
     
     		// provides the necessary bindings for java types integration
-    		fragment = types.TypesGeneratorFragment {}
-    		
+    		fragment = types.TypesGeneratorFragment auto-inject {}
     
     		// generates the required bindings only if the grammar inherits from Xbase
-    		fragment = xbase.XbaseGeneratorFragment {}
+    		fragment = xbase.XbaseGeneratorFragment auto-inject {}
     
     		// provides a preference page for template proposals
     		fragment = templates.CodetemplatesGeneratorFragment auto-inject {}

@@ -4,7 +4,6 @@
 package org.eclipse.xtext.example.fowlerdsl.ui;
 
 import org.eclipse.ui.plugin.AbstractUIPlugin;
-import org.eclipse.xtext.ui.editor.IXtextEditorCallback.NullImpl;
 
 /**
  * Use this class to register components to be used within the IDE.
@@ -12,9 +11,5 @@ import org.eclipse.xtext.ui.editor.IXtextEditorCallback.NullImpl;
 public class StatemachineUiModule extends org.eclipse.xtext.example.fowlerdsl.ui.AbstractStatemachineUiModule {
 	public StatemachineUiModule(AbstractUIPlugin plugin) {
 		super(plugin);
-	}
-	
-	public Class<? extends org.eclipse.xtext.ui.editor.IXtextEditorCallback> bindIXtextEditorCallback() {
-		return NullImpl.class;
 	}
 }
