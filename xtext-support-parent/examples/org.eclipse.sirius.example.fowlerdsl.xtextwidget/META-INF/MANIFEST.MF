@@ -1,0 +1,18 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Xtext Widget for Sirius Properties Views
+Bundle-SymbolicName: org.eclipse.sirius.example.fowlerdsl.xtextwidget;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Vendor: Obeo
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Require-Bundle: org.eclipse.eef.core,
+ org.eclipse.eef,
+ org.eclipse.sirius.common.interpreter,
+ org.eclipse.equinox.registry,
+ org.eclipse.eef.ide.ui,
+ org.eclipse.swt,
+ org.eclipse.emf.mwe.core,
+ org.eclipse.eef.common.ui,
+ com.google.inject,
+ org.eclipse.xtext.example.fowlerdsl.ui,
+ org.eclipse.xtext.ui
