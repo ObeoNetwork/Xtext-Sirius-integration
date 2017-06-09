@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<description:Group xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:description="http://www.eclipse.org/sirius/description/1.1.0" xmlns:description_1="http://www.eclipse.org/sirius/diagram/description/1.1.0" xmlns:style="http://www.eclipse.org/sirius/diagram/description/style/1.1.0" xmlns:tool="http://www.eclipse.org/sirius/diagram/description/tool/1.1.0" xmlns:tool_1="http://www.eclipse.org/sirius/description/tool/1.1.0" name="statemachine" version="11.1.1.201610211630">
+<description:Group xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:description="http://www.eclipse.org/sirius/description/1.1.0" xmlns:description_1="http://www.eclipse.org/sirius/diagram/description/1.1.0" xmlns:properties="http://www.eclipse.org/sirius/properties/1.0.0" xmlns:style="http://www.eclipse.org/sirius/diagram/description/style/1.1.0" xmlns:tool="http://www.eclipse.org/sirius/diagram/description/tool/1.1.0" xmlns:tool_1="http://www.eclipse.org/sirius/description/tool/1.1.0" name="statemachine" version="11.1.1.201610211630">
   <ownedViewpoints name="Design" modelFileExtension="statemachine">
     <ownedRepresentations xsi:type="description_1:DiagramDescription" name="State Machine Diagram" domainClass="statemachine.Statemachine" enablePopupBars="true">
       <metamodel href="http://www.eclipse.org/xtext/example/fowlerdsl/Statemachine#/"/>
@@ -237,4 +237,11 @@
   <userColorsPalettes name="statemachinepalette">
     <entries xsi:type="description:UserFixedColor" red="205" green="220" blue="243" name="stateblue"/>
   </userColorsPalettes>
+  <extensions xsi:type="properties:ViewExtensionDescription" identifier="Properties">
+    <metamodels href="http://www.eclipse.org/xtext/example/fowlerdsl/Statemachine#/"/>
+    <pages identifier="XtextPage" labelExpression="Xtext" domainClass="statemachine.State" semanticCandidateExpression="var:self" groups="//@extensions.0/@groups.0"/>
+    <groups identifier="XtextGroup" labelExpression="Xtext" domainClass="statemachine.State" semanticCandidateExpression="var:self">
+      <controls xsi:type="properties:CustomDescription" identifier="org.eclipse.sirius.example.fowlerdsl.xtextwidget.XtextPartialViewer" labelExpression="readonly"/>
+    </groups>
+  </extensions>
 </description:Group>

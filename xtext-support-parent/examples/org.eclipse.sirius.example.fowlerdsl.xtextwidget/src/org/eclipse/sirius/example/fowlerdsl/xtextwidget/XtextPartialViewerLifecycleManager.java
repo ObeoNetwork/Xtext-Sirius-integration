@@ -1,10 +1,11 @@
 package org.eclipse.sirius.example.fowlerdsl.xtextwidget;
 
+import java.util.function.Consumer;
+
 import org.eclipse.eef.EEFCustomWidgetDescription;
 import org.eclipse.eef.EEFWidgetDescription;
 import org.eclipse.eef.common.ui.api.IEEFFormContainer;
 import org.eclipse.eef.core.api.EditingContextAdapter;
-import org.eclipse.eef.core.api.controllers.IConsumer;
 import org.eclipse.eef.core.api.controllers.IEEFWidgetController;
 import org.eclipse.eef.ide.ui.api.widgets.AbstractEEFWidgetLifecycleManager;
 import org.eclipse.emf.ecore.EObject;
@@ -26,7 +27,8 @@ public class XtextPartialViewerLifecycleManager extends AbstractEEFWidgetLifecyc
 	
 	private XtextPartialViewerController controller;
 	
-	private IConsumer<Object> newValueConsumer;
+	private Consumer<Object> newValueConsumer;
+	
 	
 	public XtextPartialViewerLifecycleManager(
 			EEFCustomWidgetDescription controlDescription,
@@ -42,11 +44,13 @@ public class XtextPartialViewerLifecycleManager extends AbstractEEFWidgetLifecyc
 		Injector injector = StatemachineActivator.getInstance().getInjector(StatemachineActivator.ORG_ECLIPSE_XTEXT_EXAMPLE_FOWLERDSL_STATEMACHINE);
 		xtextPartialEditorWidget = new XtextPartialViewerWidget(parent, injector, SWT.BORDER | SWT.H_SCROLL);
 		Control control = xtextPartialEditorWidget.getControl();
-		GridData data = new GridData(SWT.FILL, SWT.FILL, false, true);
-		data.widthHint = 750;
-		control.setLayoutData(data);
+		GridData gridData = new GridData(SWT.FILL, SWT.BEGINNING, true, false);
+		gridData.heightHint = 14 * 12;
+		gridData.widthHint = 300;
+		gridData.horizontalIndent = VALIDATION_MARKER_OFFSET;
+		control.setLayoutData(gridData);
 		
-		this.controller = new XtextPartialViewerController(description, variableManager, interpreter, contextAdapter);
+		this.controller = new XtextPartialViewerController(description, variableManager, interpreter, editingContextAdapter);
 	}
 
 	@Override
