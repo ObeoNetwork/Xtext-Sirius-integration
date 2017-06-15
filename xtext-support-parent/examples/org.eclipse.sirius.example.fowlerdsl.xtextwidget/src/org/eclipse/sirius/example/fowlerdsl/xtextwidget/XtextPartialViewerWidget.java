@@ -156,7 +156,9 @@ public class XtextPartialViewerWidget {
 
 				document.setInput(virtualResource);
 				ICompositeNode elementNode = NodeModelUtils.findActualNodeFor(semanticElement);
-				update(elementNode.getText().trim());
+				if (elementNode != null && elementNode.getText() != null) {
+					update(elementNode.getText().trim());
+				}
 			}
 		}
 
