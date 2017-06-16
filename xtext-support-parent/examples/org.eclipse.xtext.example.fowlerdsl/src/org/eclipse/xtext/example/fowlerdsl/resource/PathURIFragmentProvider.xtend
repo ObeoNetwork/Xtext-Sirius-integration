@@ -5,7 +5,7 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  *******************************************************************************/
- package org.eclipse.xtext.example.fowlerdsl.resource
+package org.eclipse.xtext.example.fowlerdsl.resource
 
 import org.eclipse.emf.common.util.SegmentSequence
 import org.eclipse.emf.common.util.URI
@@ -29,7 +29,7 @@ class PathURIFragmentProvider {
 		var isContained = false
 		var internalEObject = element as InternalEObject
 		for (var container = internalEObject.eInternalContainer(); 
-			container !== null || isContained; 
+			container !== null && !isContained; 
 			container = internalEObject.eInternalContainer()) {
 			builder.append(container.eURIFragmentSegment(internalEObject.eContainingFeature(), internalEObject))
 			internalEObject = container

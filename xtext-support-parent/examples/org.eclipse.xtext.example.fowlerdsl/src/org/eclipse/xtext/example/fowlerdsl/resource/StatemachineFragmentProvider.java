@@ -1,4 +1,4 @@
-package org.eclipse.xtext.example.fowlerdsl;
+package org.eclipse.xtext.example.fowlerdsl.resource;
 
 import java.util.Iterator;
 
@@ -31,10 +31,7 @@ public class StatemachineFragmentProvider implements IFragmentProvider {
 			if (((Transition) obj).getEvent() != null && ((Transition) obj).getEvent().getCode() != null) {
 				r += ((Transition) obj).getEvent().getCode();
 			}
-			r += "|-";
-			if (((Transition) obj).getState() != null && ((Transition) obj).getState().getName() != null) {
-				r += ((Transition) obj).getState().getName();
-			}
+			r += "|";
 			return r;
 
 		} else {

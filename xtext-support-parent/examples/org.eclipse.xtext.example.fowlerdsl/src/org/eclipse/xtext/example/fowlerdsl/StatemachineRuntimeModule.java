@@ -3,6 +3,7 @@
  */
 package org.eclipse.xtext.example.fowlerdsl;
 
+import org.eclipse.xtext.example.fowlerdsl.resource.StatemachineFragmentProvider;
 import org.eclipse.xtext.example.fowlerdsl.resource.StatemachineResourceDescriptionStrategy;
 import org.eclipse.xtext.resource.IDefaultResourceDescriptionStrategy;
 import org.eclipse.xtext.resource.IFragmentProvider;
