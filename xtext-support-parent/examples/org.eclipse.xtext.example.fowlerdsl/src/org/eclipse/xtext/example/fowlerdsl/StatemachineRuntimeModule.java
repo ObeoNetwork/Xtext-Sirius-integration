@@ -3,6 +3,8 @@
  */
 package org.eclipse.xtext.example.fowlerdsl;
 
+import org.eclipse.xtext.example.fowlerdsl.resource.StatemachineResourceDescriptionStrategy;
+import org.eclipse.xtext.resource.IDefaultResourceDescriptionStrategy;
 import org.eclipse.xtext.resource.IFragmentProvider;
 
 /**
@@ -13,5 +15,9 @@ public class StatemachineRuntimeModule extends org.eclipse.xtext.example.fowlerd
 	
 	public Class<? extends IFragmentProvider> bindIFragmentProvider() {
 		return StatemachineFragmentProvider.class;
+	}
+	
+	public Class<? extends IDefaultResourceDescriptionStrategy> bindIDefaultResourceDescriptionStrategy(){
+		return StatemachineResourceDescriptionStrategy.class;	
 	}
 }
