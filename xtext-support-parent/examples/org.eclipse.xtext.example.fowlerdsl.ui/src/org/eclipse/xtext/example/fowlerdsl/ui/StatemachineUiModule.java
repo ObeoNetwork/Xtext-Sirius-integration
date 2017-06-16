@@ -5,8 +5,10 @@ package org.eclipse.xtext.example.fowlerdsl.ui;
 
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.xtext.example.fowlerdsl.ui.findrefs.StatemachineReferenceFinder;
+import org.eclipse.xtext.example.fowlerdsl.ui.rename.StatemachineDependentElementsCalculator;
 import org.eclipse.xtext.example.fowlerdsl.ui.rename.StatemachineReferenceUpdaterDispatcher;
 import org.eclipse.xtext.ui.editor.findrefs.IReferenceFinder;
+import org.eclipse.xtext.ui.refactoring.IDependentElementsCalculator;
 import org.eclipse.xtext.ui.refactoring.impl.ReferenceUpdaterDispatcher;
 
 /**
@@ -23,5 +25,9 @@ public class StatemachineUiModule extends org.eclipse.xtext.example.fowlerdsl.ui
 	
 	public Class<? extends IReferenceFinder>  bindIReferenceFinder() {
 		return StatemachineReferenceFinder.class;
+	}
+	
+	public Class<? extends IDependentElementsCalculator> bindIDependentElementsCalculator() {
+		return StatemachineDependentElementsCalculator.class;
 	}
 }

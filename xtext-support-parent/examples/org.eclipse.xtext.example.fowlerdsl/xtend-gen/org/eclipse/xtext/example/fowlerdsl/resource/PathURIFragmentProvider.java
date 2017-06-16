@@ -30,7 +30,7 @@ public class PathURIFragmentProvider {
     final SegmentSequence.Builder builder = SegmentSequence.newBuilder("/");
     boolean isContained = false;
     InternalEObject internalEObject = ((InternalEObject) element);
-    for (InternalEObject container = internalEObject.eInternalContainer(); ((container != null) || isContained); container = internalEObject.eInternalContainer()) {
+    for (InternalEObject container = internalEObject.eInternalContainer(); ((container != null) && (!isContained)); container = internalEObject.eInternalContainer()) {
       {
         builder.append(container.eURIFragmentSegment(internalEObject.eContainingFeature(), internalEObject));
         internalEObject = container;
