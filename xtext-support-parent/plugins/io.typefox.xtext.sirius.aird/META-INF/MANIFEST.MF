@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Xtext integration for Sirius aird files
+Bundle-SymbolicName: io.typefox.xtext.sirius.aird;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Vendor: TypeFox
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Require-Bundle: org.eclipse.xtext,
+ org.eclipse.core.runtime,
+ org.eclipse.xtext.ui,
+ org.eclipse.emf.ecore.editor,
+ org.eclipse.xtext.ui.shared
+Import-Package: org.apache.log4j
+Bundle-ActivationPolicy: lazy
+Bundle-Activator: io.typefox.xtext.sirius.aird.ui.Activator
