@@ -17,7 +17,8 @@ import org.eclipse.emf.ecore.resource.impl.ResourceImpl;
 import org.eclipse.xtext.EcoreUtil2;
 
 /**
- * Calculates the standard EMF path URI fragment
+ * Calculates the standard EMF path URI fragment.
+ * Temporary workaround for https://github.com/eclipse/xtext-eclipse/issues/284
  * 
  * @author koehnlein
  */
@@ -28,14 +29,15 @@ public class PathURIFragmentProvider {
    */
   public static String getPathURIFragment(final EObject element) {
     final SegmentSequence.Builder builder = SegmentSequence.newBuilder("/");
-    boolean isContained = false;
     InternalEObject internalEObject = ((InternalEObject) element);
+    Resource.Internal _eDirectResource = internalEObject.eDirectResource();
+    boolean isContained = (_eDirectResource != null);
     for (InternalEObject container = internalEObject.eInternalContainer(); ((container != null) && (!isContained)); container = internalEObject.eInternalContainer()) {
       {
         builder.append(container.eURIFragmentSegment(internalEObject.eContainingFeature(), internalEObject));
         internalEObject = container;
-        Resource.Internal _eDirectResource = container.eDirectResource();
-        boolean _tripleNotEquals = (_eDirectResource != null);
+        Resource.Internal _eDirectResource_1 = container.eDirectResource();
+        boolean _tripleNotEquals = (_eDirectResource_1 != null);
         if (_tripleNotEquals) {
           isContained = true;
         }

@@ -15,7 +15,8 @@ import org.eclipse.emf.ecore.resource.impl.ResourceImpl
 import org.eclipse.xtext.EcoreUtil2
 
 /**
- * Calculates the standard EMF path URI fragment
+ * Calculates the standard EMF path URI fragment.
+ * Temporary workaround for https://github.com/eclipse/xtext-eclipse/issues/284
  * 
  * @author koehnlein
  */
@@ -26,8 +27,8 @@ class PathURIFragmentProvider {
 	 */
 	static def String getPathURIFragment(EObject element) {
 		val builder = SegmentSequence.newBuilder("/")
-		var isContained = false
 		var internalEObject = element as InternalEObject
+		var isContained = internalEObject.eDirectResource !== null
 		for (var container = internalEObject.eInternalContainer(); 
 			container !== null && !isContained; 
 			container = internalEObject.eInternalContainer()) {
