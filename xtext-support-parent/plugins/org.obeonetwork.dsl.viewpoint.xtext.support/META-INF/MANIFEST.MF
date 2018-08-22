@@ -7,7 +7,7 @@ Bundle-Activator: org.obeonetwork.dsl.viewpoint.xtext.support.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.emf.common;bundle-version="2.5.0",
- org.eclipse.xtext;bundle-version="2.0.0",
+ org.eclipse.xtext;bundle-version="2.2.0",
  org.eclipse.gmf.runtime.diagram.ui;bundle-version="1.2.1",
  org.eclipse.ui.ide;bundle-version="3.5.0",
  org.eclipse.xtext.ui;bundle-version="2.0.0",
@@ -17,6 +17,6 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.sirius;bundle-version="1.0.0",
  org.eclipse.emf.compare.rcp;bundle-version="2.2.0"
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Export-Package: org.obeonetwork.dsl.viewpoint.xtext.support,
  org.obeonetwork.dsl.viewpoint.xtext.support.action

@@ -44,8 +44,6 @@ import org.eclipse.sirius.viewpoint.ViewpointPackage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.custom.VerifyKeyListener;
-import org.eclipse.swt.events.KeyAdapter;
-import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.VerifyEvent;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
@@ -54,7 +52,6 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Decorations;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.xtext.nodemodel.ICompositeNode;
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
@@ -62,14 +59,10 @@ import org.eclipse.xtext.parser.IParseResult;
 import org.eclipse.xtext.resource.IResourceFactory;
 import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.resource.XtextResourceSet;
-import org.eclipse.xtext.ui.editor.XtextSourceViewer;
 import org.eclipse.xtext.ui.editor.embedded.EmbeddedEditor;
 import org.eclipse.xtext.ui.editor.embedded.EmbeddedEditorFactory;
 import org.eclipse.xtext.ui.editor.embedded.EmbeddedEditorModelAccess;
 import org.eclipse.xtext.ui.editor.embedded.IEditedResourceProvider;
-import org.eclipse.xtext.ui.editor.info.ResourceWorkingCopyFileEditorInput;
-import org.eclipse.xtext.ui.editor.model.IXtextDocument;
-import org.eclipse.xtext.util.concurrent.IUnitOfWork;
 
 import com.google.inject.Injector;
 
@@ -278,13 +271,14 @@ public class XtextEmbeddedEditor {
 
 		EmbeddedEditorFactory factory = new EmbeddedEditorFactory();
 		xtextInjector.injectMembers(factory);
-		xTextEmbeddedEditor = factory.newEditor(new IEditedResourceProvider() {
+		IEditedResourceProvider provider = new IEditedResourceProvider() {
 
 			@Override
 			public XtextResource createResource() {
 				return xtextResource;
 			}
-		}).showErrorAndWarningAnnotations().withParent(xtextEditorComposite);
+		};
+		xTextEmbeddedEditor = factory.newEditor(provider).showErrorAndWarningAnnotations().withParent(xtextEditorComposite);
 		xtextPartialEditor = xTextEmbeddedEditor.createPartialEditor(prefix,
 				editablePart, suffix, true);
 
