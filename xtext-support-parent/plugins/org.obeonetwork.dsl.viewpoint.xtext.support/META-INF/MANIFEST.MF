@@ -21,4 +21,3 @@ Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Export-Package: org.obeonetwork.dsl.viewpoint.xtext.support,
  org.obeonetwork.dsl.viewpoint.xtext.support.action
-Import-Package: de.uka.ipd.sdq.stoex
