@@ -79,9 +79,9 @@ public class XtextEmbeddedEditor {
 
 	protected EmbeddedEditorModelAccess xtextPartialEditor;
 
-	private final Injector xtextInjector;
+	protected final Injector xtextInjector;
 
-	private Resource originalResource;
+	protected Resource originalResource;
 
 	protected XtextResource xtextResource;
 

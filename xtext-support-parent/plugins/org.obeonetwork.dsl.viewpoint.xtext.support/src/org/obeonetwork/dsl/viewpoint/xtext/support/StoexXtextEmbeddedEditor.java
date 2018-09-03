@@ -4,11 +4,15 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Collections;
 
+import org.eclipse.emf.common.util.BasicMonitor;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.transaction.RecordingCommand;
+import org.eclipse.emf.transaction.TransactionalEditingDomain;
+import org.eclipse.emf.transaction.util.TransactionUtil;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.DiagramRootEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.IGraphicalEditPart;
 import org.eclipse.swt.SWT;
@@ -29,11 +33,8 @@ import de.uka.ipd.sdq.stoex.RandomVariable;
 
 public class StoexXtextEmbeddedEditor extends XtextEmbeddedEditor {
 
-	private final Injector xtextInjector;
-
 	public StoexXtextEmbeddedEditor(IGraphicalEditPart editPart, Injector xtextInjector) {
 		super(editPart, xtextInjector);
-		this.xtextInjector = xtextInjector;
 	}
 
 	protected XtextResource createVirtualXtextResource(URI uri, EObject semanticElement) throws IOException {
@@ -56,23 +57,22 @@ public class StoexXtextEmbeddedEditor extends XtextEmbeddedEditor {
 		return xtextVirtualResource;
 	}
 
-	// TODO ist id neu gesetzt/übernommen?
 	@Override
 	protected void reconcile(Resource resourceInSirius, XtextResource resourceInEmbeddedEditor) {
-		EObject contentInSirius = resourceInSirius.getEObject(semanticElementFragment);
-		EObject newContent = resourceInEmbeddedEditor.getContents().get(0);
-
+		EObject randomVariableInSirius = resourceInSirius.getEObject(semanticElementFragment);
+		
 		// replace specification
 		String newSpecification = resourceInEmbeddedEditor.getParseResult().getRootNode().getText();
 
-		((RandomVariable) contentInSirius).setSpecification(newSpecification);
+		final TransactionalEditingDomain editingDomain = TransactionUtil.getEditingDomain(originalResource);
+		editingDomain.getCommandStack()
+				.execute(new RecordingCommand(editingDomain, "update resource after direct text edit") {
 
-		RandomVariable newObj = (RandomVariable) EcoreUtil.copy(contentInSirius);
-		EClass newObjClass = newObj.eClass();
-		newObjClass.eSet(newObjClass.getEStructuralFeature("specification"), newSpecification);
-
-		EcoreUtil.replace(newObj.getExpression(), newContent);
-		EcoreUtil.replace(contentInSirius, newObj);
+					@Override
+					protected void doExecute() {
+						((RandomVariable) randomVariableInSirius).setSpecification(newSpecification);
+					}
+				});
 	}
 
 	/**
