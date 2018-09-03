@@ -15,8 +15,10 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.xtext.ui.shared;bundle-version="0.8.0",
  org.eclipse.emf.compare,
  org.eclipse.sirius;bundle-version="1.0.0",
- org.eclipse.emf.compare.rcp;bundle-version="2.2.0"
+ org.eclipse.emf.compare.rcp;bundle-version="2.2.0",
+ org.eclipse.emf.cdo
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Export-Package: org.obeonetwork.dsl.viewpoint.xtext.support,
  org.obeonetwork.dsl.viewpoint.xtext.support.action
+Import-Package: de.uka.ipd.sdq.stoex
