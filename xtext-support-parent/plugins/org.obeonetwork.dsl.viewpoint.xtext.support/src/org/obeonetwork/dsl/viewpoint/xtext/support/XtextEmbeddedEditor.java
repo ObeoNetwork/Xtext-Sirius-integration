@@ -73,7 +73,7 @@ public class XtextEmbeddedEditor {
 
 	private static int MIN_EDITOR_HEIGHT = 20;
 
-	protected IGraphicalEditPart hostEditPart;
+	private IGraphicalEditPart hostEditPart;
 
 	private IEditorPart diagramEditor;
 
@@ -87,9 +87,9 @@ public class XtextEmbeddedEditor {
 
 	protected String semanticElementFragment;
 
-	protected Decorations xtextEditorComposite;
+	private Decorations xtextEditorComposite;
 
-	protected EmbeddedEditor xTextEmbeddedEditor;
+	private EmbeddedEditor xTextEmbeddedEditor;
 
 	public XtextEmbeddedEditor(IGraphicalEditPart editPart, Injector xtextInjector) {
 		this.hostEditPart = editPart;
@@ -114,18 +114,17 @@ public class XtextEmbeddedEditor {
 		if (originalSemanticElement == null) {
 			return;
 		}
-		this.originalResource = originalSemanticElement.eResource();
-		EObject semanticElement = EcoreUtil.copy(originalResource.getContents().get(0));
+		EObject semanticElement = EcoreUtil.copy(originalSemanticElement.eResource().getContents().get(0));
 		showEditor(originalSemanticElement, semanticElement);
 	}
 	
 	public void showEditor(EObject originalSemanticElement) {
-		this.originalResource = originalSemanticElement.eResource();
 		showEditor(originalSemanticElement, originalSemanticElement);
 	}
 
 	public void showEditor(EObject originalSemanticElement, EObject semanticElement) {
 		try {
+			this.originalResource = originalSemanticElement.eResource();
 			// Clone root EObject
 			if (this.xtextResource == null) {
 				this.xtextResource = createVirtualXtextResource(originalResource.getURI(), semanticElement);
@@ -239,9 +238,6 @@ public class XtextEmbeddedEditor {
 	 * @throws Exception
 	 */
 	protected void createXtextEditor() throws Exception {
-		DiagramRootEditPart diagramEditPart = (DiagramRootEditPart) hostEditPart.getRoot();
-		Composite parentComposite = (Composite) diagramEditPart.getViewer().getControl();
-		
 		EObject semanticElementInDocument = xtextResource.getEObject(semanticElementFragment);
 		ICompositeNode rootNode = xtextResource.getParseResult().getRootNode();
 		String allText = rootNode.getText();
@@ -249,6 +245,14 @@ public class XtextEmbeddedEditor {
 		String prefix = allText.substring(0, elementNode.getOffset() - 1);
 		String editablePart = allText.substring(elementNode.getOffset(), elementNode.getEndOffset());
 		String suffix = allText.substring(elementNode.getEndOffset());
+		
+		createXtextEditor(semanticElementInDocument, prefix, editablePart, suffix);
+	}
+	
+	protected void createXtextEditor(EObject semanticElementInDocument, String prefix, String editablePart, String suffix) {
+		DiagramRootEditPart diagramEditPart = (DiagramRootEditPart) hostEditPart.getRoot();
+		Composite parentComposite = (Composite) diagramEditPart.getViewer().getControl();
+		
 		xtextEditorComposite = new Decorations(parentComposite, SWT.RESIZE | SWT.ON_TOP | SWT.BORDER);
 		xtextEditorComposite.setLayout(new FillLayout());
 
@@ -271,7 +275,7 @@ public class XtextEmbeddedEditor {
 		xtextEditorComposite.forceFocus();
 	}
 
-	protected void addKeyVerifyListener() {
+	private void addKeyVerifyListener() {
 		final StyledText xtextTextWidget = xTextEmbeddedEditor.getViewer().getTextWidget();
 		xtextTextWidget.addVerifyKeyListener(new VerifyKeyListener() {
 			public void verifyKey(VerifyEvent e) {
@@ -289,7 +293,7 @@ public class XtextEmbeddedEditor {
 		});
 	}
 
-	protected void setEditorBounds() {
+	private void setEditorBounds() {
 		// mind the added newlines
 		String editString = xtextPartialEditor.getEditablePart();
 
