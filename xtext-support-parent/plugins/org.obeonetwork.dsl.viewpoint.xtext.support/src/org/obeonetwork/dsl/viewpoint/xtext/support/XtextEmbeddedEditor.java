@@ -202,7 +202,7 @@ public class XtextEmbeddedEditor {
 		}
 	}
 
-	private boolean hasDanglingRefs(XtextResource xtextResource2) {
+	protected boolean hasDanglingRefs(XtextResource xtextResource2) {
 		return EcoreUtil.UnresolvedProxyCrossReferencer.find(xtextResource2).size() > 0;
 	}
 
@@ -242,7 +242,7 @@ public class XtextEmbeddedEditor {
 		ICompositeNode rootNode = xtextResource.getParseResult().getRootNode();
 		String allText = rootNode.getText();
 		ICompositeNode elementNode = NodeModelUtils.findActualNodeFor(semanticElementInDocument);
-		String prefix = allText.substring(0, elementNode.getOffset() - 1);
+		String prefix = "";
 		String editablePart = allText.substring(elementNode.getOffset(), elementNode.getEndOffset());
 		String suffix = allText.substring(elementNode.getEndOffset());
 		
